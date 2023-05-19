@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="GVL_SAMPLE" Id="{b2864d8f-27b9-49d7-a36f-f3e6d25b7296}">
+    <Declaration><![CDATA[VAR_GLOBAL
+	g_xFirstPass: BOOL := TRUE;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

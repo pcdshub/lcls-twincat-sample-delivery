@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.18">
+  <POU Name="FB_BronkhorstMFM" Id="{6583b79d-8f50-416f-b9a8-da0bf6f716a8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_BronkhorstMFM
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+        {attribute 'pytmc' := '
+            pv:
+         '}
+        stMFM	:	ST_BhElFlow;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

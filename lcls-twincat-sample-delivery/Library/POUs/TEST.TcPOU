@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="TEST" Id="{42c5d645-8f72-4a7d-9897-ab636f1cee6d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM TEST
+VAR
+{attribute 'pytmc' := 'pv: @(P):SEL:A'}
+{attribute 'TcLinkTo' := '.stSensSerial.stComIn.Status := TIIB[M3 Selector A Serial IO (EP6002-0002)]^COM TxPDO-Map Inputs Channel 1^Status;
+                          .stViciSerial.stComIn.Status := TIIB[M3 Selector A Serial IO (EP6002-0002)]^COM TxPDO-Map Inputs Channel 2^Status;
+                          .stSensSerial.stComOut.Ctrl := TIID^MAIN (EtherCAT)^M3 Selector A Serial IO (EP6002-0002)^COM RxPDO-Map Outputs Channel 1^Ctrl;
+                          .stViciSerial.stComOut.Ctrl := TIID^MAIN (EtherCAT)^M3 Selector A Serial IO (EP6002-0002)^COM RxPDO-Map Outputs Channel 2^Ctrl;
+                          .stShaker01.q_xPwrDO := TIIB[M3 Selector A Digital IO (EP2338-1001)]^Channel 9^Output;
+                          .stShaker02.q_xPwrDO := TIIB[M3 Selector A Digital IO (EP2338-1001)]^Channel 10^Output;
+                          .stShaker03.q_xPwrDO := TIIB[M3 Selector A Digital IO (EP2338-1001)]^Channel 11^Output;
+                          .stShaker04.q_xPwrDO := TIIB[M3 Selector A Digital IO (EP2338-1001)]^Channel 12^Output;
+                          .stBaseIO.i_SyncUnitWC := TIID^MAIN (EtherCAT)^M3 Selector A (EP1111)^WcState^WcState;
+'}
+fbSelectorA : FB_SelectorM3;
+	
+{attribute 'pytmc' := 'pv: @(P):PCM:A'}
+{attribute 'TcLinkTo' := '.stPropAir1.i_iPressRB := TIID^MAIN (EtherCAT)^PCM A (EP4374-0002)^AI Inputs Channel 1^Value;
+                          .stPropAir2.i_iPressRB := TIID^MAIN (EtherCAT)^PCM A (EP4374-0002)^AI Inputs Channel 2^Value;
+                          .stPropAir1.q_iPressCt := TIID^MAIN (EtherCAT)^PCM A (EP4374-0002)^AO Outputs Channel 3^Analog output;
+                          .stPropAir2.q_iPressCt := TIID^MAIN (EtherCAT)^PCM A (EP4374-0002)^AO Outputs Channel 4^Analog output;
+                          .stSerial1.stComIn.Status := TIID^MAIN (EtherCAT)^PCM A (EP6002-0002)^COM TxPDO-Map Inputs Channel 1^Status;
+                          .stSerial2.stComIn.Status := TIID^MAIN (EtherCAT)^PCM A (EP6002-0002)^COM TxPDO-Map Inputs Channel 2^Status;
+                          .stSerial1.stComOut.Ctrl := TIID^MAIN (EtherCAT)^PCM A (EP6002-0002)^COM RxPDO-Map Outputs Channel 1^Ctrl;
+                          .stSerial2.stComOut.Ctrl := TIID^MAIN (EtherCAT)^PCM A (EP6002-0002)^COM RxPDO-Map Outputs Channel 2^Ctrl;
+                          .stBaseIO.i_SyncUnitWC := TIID^MAIN (EtherCAT)^PCM A (EP1111)^WcState^WcState;
+'}	
+fbPCMA		: FB_PressureControlModule;
+	
+{attribute 'pytmc' := 'pv: @(P):MAN'}
+{attribute 'TcLinkTo' := '.stValve[1].qxDO := TIIB[Gas_Mani_ValveCtrl (EP2338-0001)]^Channel 9^Output;
+                          .stValve[1].ixOPN := TIIB[Gas_Mani_ValveRbk (EP2338-0001)]^Channel 1^Input;
+                          .stValve[2].qxDO := TIIB[Gas_Mani_ValveCtrl (EP2338-0001)]^Channel 10^Output;
+                          .stValve[2].ixOPN := TIIB[Gas_Mani_ValveRbk (EP2338-0001)]^Channel 2^Input;
+                          .stValve[3].qxDO := TIIB[Gas_Mani_ValveCtrl (EP2338-0001)]^Channel 11^Output;
+                          .stValve[3].ixOPN := TIIB[Gas_Mani_ValveRbk (EP2338-0001)]^Channel 3^Input;
+                          .stValve[4].qxDO := TIIB[Gas_Mani_ValveCtrl (EP2338-0001)]^Channel 12^Output;
+                          .stValve[4].ixOPN := TIIB[Gas_Mani_ValveRbk (EP2338-0001)]^Channel 4^Input;
+                          .stValve[5].qxDO := TIIB[Gas_Mani_ValveCtrl (EP2338-0001)]^Channel 13^Output;
+                          .stValve[5].ixOPN := TIIB[Gas_Mani_ValveRbk (EP2338-0001)]^Channel 5^Input;
+                          .stValve[6].qxDO := TIIB[Gas_Mani_ValveCtrl (EP2338-0001)]^Channel 14^Output;
+                          .stValve[6].ixOPN := TIIB[Gas_Mani_ValveRbk (EP2338-0001)]^Channel 6^Input;
+                          .stValve[7].qxDO := TIIB[Gas_Mani_ValveCtrl (EP2338-0001)]^Channel 15^Output;
+                          .stValve[7].ixOPN := TIIB[Gas_Mani_ValveRbk (EP2338-0001)]^Channel 7^Input;
+                          .stBaseIO.i_SyncUnitWC :=	TIID^MAIN (EtherCAT)^Gas_Mani (EP1111)^WcState^WcState;
+'}
+fbGasMan : FB_GasManifold;
+	
+{attribute 'pytmc' := 'pv: @(P):MFM:A'}
+{attribute 'TcLinkTo' := '.stMFM.i_rFlow := TIID^MAIN (EtherCAT)^Bronkhorst MFM A^TxPDO Map^fMeasure;
+                          .stMFM.q_rSetpoint := TIID^MAIN (EtherCAT)^Bronkhorst MFM A^RxPDO Map^fSetpoint;
+'}
+fbBronkhorstA : FB_BronkhorstMFM;
+
+{attribute 'pytmc' := 'pv: @(P):SPR:A'}
+{attribute 'TcLinkTo' := '.q_xDO1 := TIIB[Solenoid Pair A Digital IO (EP2338-0001)]^Channel 9^Output;
+                          .q_xDO2 := TIIB[Solenoid Pair A Digital IO (EP2338-0001)]^Channel 10^Output;
+'}
+fbSolenoidPairA : FB_SolenoidPair;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbSelectorA();
+fbPCMA();
+fbGasMan();
+fbBronkhorstA();
+fbSolenoidPairA();
+
+(* Following execution of all the programs, set the first pass false *)
+g_xFirstPass := FALSE;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
