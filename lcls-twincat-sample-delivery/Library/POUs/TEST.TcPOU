@@ -15,7 +15,7 @@ VAR
                           .stBaseIO.i_SyncUnitWC := TIID^MAIN (EtherCAT)^M3 Selector A (EP1111)^WcState^WcState;
 '}
 fbSelectorA : FB_SelectorM3;
-	
+
 {attribute 'pytmc' := 'pv: @(P):PCM:A'}
 {attribute 'TcLinkTo' := '.stPropAir1.i_iPressRB := TIID^MAIN (EtherCAT)^PCM A (EP4374-0002)^AI Inputs Channel 1^Value;
                           .stPropAir2.i_iPressRB := TIID^MAIN (EtherCAT)^PCM A (EP4374-0002)^AI Inputs Channel 2^Value;
@@ -26,9 +26,9 @@ fbSelectorA : FB_SelectorM3;
                           .stSerial1.stComOut.Ctrl := TIID^MAIN (EtherCAT)^PCM A (EP6002-0002)^COM RxPDO-Map Outputs Channel 1^Ctrl;
                           .stSerial2.stComOut.Ctrl := TIID^MAIN (EtherCAT)^PCM A (EP6002-0002)^COM RxPDO-Map Outputs Channel 2^Ctrl;
                           .stBaseIO.i_SyncUnitWC := TIID^MAIN (EtherCAT)^PCM A (EP1111)^WcState^WcState;
-'}	
+'}
 fbPCMA		: FB_PressureControlModule;
-	
+
 {attribute 'pytmc' := 'pv: @(P):MAN'}
 {attribute 'TcLinkTo' := '.stValve[1].qxDO := TIIB[Gas_Mani_ValveCtrl (EP2338-0001)]^Channel 9^Output;
                           .stValve[1].ixOPN := TIIB[Gas_Mani_ValveRbk (EP2338-0001)]^Channel 1^Input;
@@ -47,7 +47,7 @@ fbPCMA		: FB_PressureControlModule;
                           .stBaseIO.i_SyncUnitWC :=	TIID^MAIN (EtherCAT)^Gas_Mani (EP1111)^WcState^WcState;
 '}
 fbGasMan : FB_GasManifold;
-	
+
 {attribute 'pytmc' := 'pv: @(P):MFM:A'}
 {attribute 'TcLinkTo' := '.stMFM.i_rFlow := TIID^MAIN (EtherCAT)^Bronkhorst MFM A^TxPDO Map^fMeasure;
                           .stMFM.q_rSetpoint := TIID^MAIN (EtherCAT)^Bronkhorst MFM A^RxPDO Map^fSetpoint;
@@ -59,7 +59,7 @@ fbBronkhorstA : FB_BronkhorstMFM;
                           .q_xDO2 := TIIB[Solenoid Pair A Digital IO (EP2338-0001)]^Channel 10^Output;
 '}
 fbSolenoidPairA : FB_SolenoidPair;
-	
+
 END_VAR
 ]]></Declaration>
     <Implementation>
