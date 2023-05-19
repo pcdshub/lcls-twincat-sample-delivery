@@ -1,1 +1,1 @@
-Library for common components for SDS
+SDS Library for common components
