@@ -16,8 +16,8 @@
     <Implicit_Jitter_Distribution>{4c642e42-dd2b-4c99-8ca9-58dc1dd6b4c4}</Implicit_Jitter_Distribution>
     <LibraryReferences>{81f311d6-a79c-473d-a5d2-d31e1a3735a4}</LibraryReferences>
     <Company>SLAC</Company>
-    <Released>false</Released>
-    <ProjectVersion>0.0.0</ProjectVersion>
+    <Released>true</Released>
+    <ProjectVersion>0.0.1</ProjectVersion>
     <Title>lcls-twincat-sample-delivery</Title>
   </PropertyGroup>
   <ItemGroup>
