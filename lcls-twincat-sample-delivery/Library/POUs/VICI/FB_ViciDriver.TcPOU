@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.18">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="FB_ViciDriver" Id="{0a9d4465-4ab2-4b83-97fa-f91b77d4959f}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_ViciDriver
 VAR_INPUT
@@ -100,20 +100,10 @@ CASE iStep OF
         (* Mirror the "clock" value across the vertical axis of symmetry *)
         iReqPosReverse := 13 - i_stControl.iReqPos;
         IF q_stStatus.iReqPos <> i_stControl.iReqPos THEN
-            IF q_stStatus.iCurrPos > i_stControl.iReqPos THEN
-                IF ABS(q_stStatus.iCurrPos - i_stControl.iReqPos) >= 6 THEN
-                    sSendData := CONCAT('CW', INT_TO_STRING(iReqPosReverse));
-                ELSE
-                    sSendData := CONCAT('CC', INT_TO_STRING(iReqPosReverse));
-                END_IF
-            END_IF
-            IF q_stStatus.iCurrPos < i_stControl.iReqPos THEN
-                IF ABS(q_stStatus.iCurrPos - i_stControl.iReqPos) >= 6 THEN
-                    sSendData := CONCAT('CC', INT_TO_STRING(iReqPosReverse));
-                ELSE
-                    sSendData := CONCAT('CW', INT_TO_STRING(iReqPosReverse));
-                END_IF
-            END_IF
+
+            // Move actuator to new position via the shortest path
+            sSendData := CONCAT('GO', INT_TO_STRING(iReqPosReverse));
+
             FBViciTransaction(
                 i_xExecute:= TRUE,
                 i_sSendData:= sSendData,
