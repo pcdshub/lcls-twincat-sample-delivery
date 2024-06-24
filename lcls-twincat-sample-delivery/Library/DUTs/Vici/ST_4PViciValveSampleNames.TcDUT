@@ -3,7 +3,7 @@
   <DUT Name="ST_4PViciValveSampleNames" Id="{b42a57d8-e8a7-4340-891c-200ec30ff736}">
     <Declaration><![CDATA[TYPE ST_4PViciValveSampleNames :
 STRUCT
-	  {attribute 'pytmc' := '
+      {attribute 'pytmc' := '
         pv: 01
         io: i
      '}

@@ -3,35 +3,35 @@
   <POU Name="FB_4PViciValve" Id="{6fb89063-7f94-4131-981c-d943e8a8216a}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_4PViciValve
 VAR_INPUT
-	iAddress : INT;
+    iAddress : INT;
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
 
-	// Re-Use Vici Driver Code for 12 port Value
-	fbViciDriver  : FB_ViciDriver;
-	fbViciSerial  : FB_SerialCommWrapper;
-	stViciSerial  : ST_SerialComm;
-	stViciVlvCtrl : ST_ViciControl;
-	stViciVlvStatus : ST_ViciStatus;
-	//
-	iNewPos: INT;
-	iMaped : INT;
-	
+    // Re-Use Vici Driver Code for 12 port Value
+    fbViciDriver  : FB_ViciDriver;
+    fbViciSerial  : FB_SerialCommWrapper;
+    stViciSerial  : ST_SerialComm;
+    stViciVlvCtrl : ST_ViciControl;
+    stViciVlvStatus : ST_ViciStatus;
+    //
+    iNewPos: INT;
+    iMaped : INT;
 
-	{attribute 'pytmc' := '
+
+    {attribute 'pytmc' := '
         pv: ReqPos
         io: io
     '}
-	iVici1ReqPos : INT;
+    iVici1ReqPos : INT;
 
-	{attribute 'pytmc' := '
+    {attribute 'pytmc' := '
         pv: SampleNames
         io: io
      '}
-	 stSampleName : ST_4PViciValveSampleNames;
-	
+     stSampleName : ST_4PViciValveSampleNames;
+
 END_VAR
 ]]></Declaration>
     <Implementation>
