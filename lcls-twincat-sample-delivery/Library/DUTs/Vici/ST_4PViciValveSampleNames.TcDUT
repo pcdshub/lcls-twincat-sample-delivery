@@ -5,22 +5,22 @@
 STRUCT
       {attribute 'pytmc' := '
         pv: 01
-        io: i
+        io: io
      '}
      s1 : STRING;
      {attribute 'pytmc' := '
         pv: 02
-        io: i
+        io: io
      '}
      s2 : STRING;
      {attribute 'pytmc' := '
         pv: 03
-        io: i
+        io: io
      '}
      s3 : STRING;
      {attribute 'pytmc' := '
         pv: 04
-        io: i
+        io: io
      '}
      s4 : STRING;
 END_STRUCT
