@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="FB_4PViciValve" Id="{6fb89063-7f94-4131-981c-d943e8a8216a}" SpecialFunc="None">
+  <POU Name="FB_4PViciValve" Id="{867cd0ab-cbb3-428d-92e9-f85cb5a24957}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_4PViciValve
 VAR_INPUT
     iAddress : INT;
