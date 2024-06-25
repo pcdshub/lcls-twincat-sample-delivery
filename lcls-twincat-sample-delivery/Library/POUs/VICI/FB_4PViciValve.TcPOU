@@ -15,10 +15,6 @@ VAR
     stViciSerial  : ST_SerialComm;
     stViciVlvCtrl : ST_ViciControl;
     stViciVlvStatus : ST_ViciStatus;
-    //
-    iNewPos: INT;
-    iMapped : INT;
-
 
     {attribute 'pytmc' := '
         pv: ReqPos
@@ -35,9 +31,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[iNewPos := LIMIT(1, iVici1ReqPos, 4);
+      <ST><![CDATA[
 
-stViciVlvCtrl.iReqPos := iNewPos;
+stViciVlvCtrl.iReqPos := LIMIT(1, iVici1ReqPos, 4);
 stViciVlvCtrl.iAddress := iAddress;
 stViciVlvCtrl.iPortCount := 4;
 fbViciDriver(
