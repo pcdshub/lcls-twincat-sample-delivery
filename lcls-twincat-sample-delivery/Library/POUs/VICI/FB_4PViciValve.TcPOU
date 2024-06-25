@@ -35,15 +35,11 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Re-using 12 Port Code, Need to map 1-4 to vlaues that 12 port Commands checkout FB_ViciDriver iStep: 5000
-//map 1-4 to 9 - 12;
+      <ST><![CDATA[iNewPos := LIMIT(1, iVici1ReqPos, 4);
 
-iNewPos := LIMIT(1, iVici1ReqPos, 4);
-iMapped := 13 - iNewPos;
-
-stViciVlvCtrl.iReqPos := iMapped;
+stViciVlvCtrl.iReqPos := iNewPos;
 stViciVlvCtrl.iAddress := iAddress;
-
+stViciVlvCtrl.iPortCount := 4;
 fbViciDriver(
     i_xExecute:= TRUE,
     i_tTimeOut:= t#10s,
