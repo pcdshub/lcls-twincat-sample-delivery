@@ -17,7 +17,7 @@ VAR
     stViciVlvStatus : ST_ViciStatus;
     //
     iNewPos: INT;
-    iMaped : INT;
+    iMapped : INT;
 
 
     {attribute 'pytmc' := '
@@ -35,13 +35,13 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Re-using 12 Port Code, Need to map 1-4 to vlaues that 12 port Commands
+      <ST><![CDATA[// Re-using 12 Port Code, Need to map 1-4 to vlaues that 12 port Commands checkout FB_ViciDriver iStep: 5000
 //map 1-4 to 9 - 12;
 
 iNewPos := LIMIT(1, iVici1ReqPos, 4);
-iMaped := 12 + ((iNewPos - 1)*(9 - 12) / (4 - 1));
+iMapped := 13 - iNewPos;
 
-stViciVlvCtrl.iReqPos := iMaped;
+stViciVlvCtrl.iReqPos := iMapped;
 stViciVlvCtrl.iAddress := iAddress;
 
 fbViciDriver(
