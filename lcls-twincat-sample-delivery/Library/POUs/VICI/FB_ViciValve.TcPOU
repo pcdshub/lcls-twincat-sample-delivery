@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_ViciValve" Id="{867cd0ab-cbb3-428d-92e9-f85cb5a24957}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ViciValve
+(* FB for VICI RS-232 Valave*)
+
+VAR_INPUT
+    iAddress : INT;
+    iNumOfPorts : INT;
+    iReqPos : INT;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+    fbViciDriver  : FB_ViciDriver;
+    fbViciSerial  : FB_SerialCommWrapper;
+    stViciSerial  : ST_SerialComm;
+    stViciVlvCtrl : ST_ViciControl;
+    stViciVlvStatus : ST_ViciStatus;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[stViciVlvCtrl.iReqPos := iReqPos;
+stViciVlvCtrl.iAddress := iAddress;
+stViciVlvCtrl.iPortCount := iNumOfPorts;
+
+fbViciDriver(
+    i_xExecute:= TRUE,
+    i_tTimeOut:= t#10s,
+    i_stControl:= stViciVlvCtrl,
+    iq_stSerialRXBuffer:= stViciSerial.RxBuffer,
+    iq_stSerialTXBuffer:= stViciSerial.TxBuffer,
+    q_stStatus=> stViciVlvStatus);
+
+IF 	fbViciDriver.q_xDone OR
+    fbViciDriver.q_xError OR
+    fbViciDriver.q_xTimeout THEN
+    (* reset function for next time *)
+    fbViciDriver(i_xExecute:=FALSE,
+        iq_stSerialRXBuffer:= stViciSerial.RxBuffer,
+        iq_stSerialTXBuffer:= stViciSerial.TxBuffer);
+
+END_IF
+
+fbViciSerial(stSerialComm := stViciSerial);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
