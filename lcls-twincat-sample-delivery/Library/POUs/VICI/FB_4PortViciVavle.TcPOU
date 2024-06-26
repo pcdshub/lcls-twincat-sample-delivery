@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_4PortViciVavle" Id="{35f5328b-2692-4fc5-a1f1-07aefd5e56d3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FB_4PortViciVavle
+VAR_INPUT
+    iAdress : INT;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+    fbNporValve : FB_ViciValve;
+    iNumPorts : INT := 4;
+
+    {attribute 'pytmc' := '
+        pv: iReqPos
+        io: io
+     '}
+    iReqPos : INT;
+    {attribute 'pytmc' := '
+        pv: SampleNames
+        io: io
+     '}
+    stSampleNames : ST_4PViciValveSampleNames;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbNporValve(iAddress := iAdress, iNumOfPorts := iNumPorts, iReqPos := iReqPos);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

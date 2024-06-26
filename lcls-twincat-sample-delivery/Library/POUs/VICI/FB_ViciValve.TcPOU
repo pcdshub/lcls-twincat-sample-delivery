@@ -1,41 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="FB_4PViciValve" Id="{867cd0ab-cbb3-428d-92e9-f85cb5a24957}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_4PViciValve
+  <POU Name="FB_ViciValve" Id="{867cd0ab-cbb3-428d-92e9-f85cb5a24957}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ViciValve
+(* FB for VICI RS-232 Valave*)
+
 VAR_INPUT
     iAddress : INT;
+    iNumOfPorts : INT;
+    iReqPos : INT;
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-
-    // Re-Use Vici Driver Code for 12 port Value
     fbViciDriver  : FB_ViciDriver;
     fbViciSerial  : FB_SerialCommWrapper;
     stViciSerial  : ST_SerialComm;
     stViciVlvCtrl : ST_ViciControl;
     stViciVlvStatus : ST_ViciStatus;
 
-    {attribute 'pytmc' := '
-        pv: ReqPos
-        io: io
-    '}
-    iVici1ReqPos : INT;
-
-    {attribute 'pytmc' := '
-        pv: SampleNames
-        io: io
-     '}
-     stSampleName : ST_4PViciValveSampleNames;
-
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
-
-stViciVlvCtrl.iReqPos := LIMIT(1, iVici1ReqPos, 4);
+      <ST><![CDATA[stViciVlvCtrl.iReqPos := iReqPos;
 stViciVlvCtrl.iAddress := iAddress;
-stViciVlvCtrl.iPortCount := 4;
+stViciVlvCtrl.iPortCount := iNumOfPorts;
+
 fbViciDriver(
     i_xExecute:= TRUE,
     i_tTimeOut:= t#10s,

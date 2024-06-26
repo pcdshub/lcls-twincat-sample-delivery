@@ -83,7 +83,7 @@ CASE iStep OF
             (* else then grab the right two characters and convert to INT *)
             ELSE
             sWorking := RIGHT(q_stStatus.sViciReply, 2);
-            q_stStatus.iCurrPos := 13 - STRING_TO_INT(sWorking); (* pass that INT to the q_stStatus.iCurrPos, mirroring positions *)
+            q_stStatus.iCurrPos := (i_stControl.iPortCount + 1)- STRING_TO_INT(sWorking); (* pass that INT to the q_stStatus.iCurrPos, mirroring positions *)
             q_stStatus.xPosValid := TRUE;
             FBViciTransaction( i_xExecute:= FALSE, iq_stSerialRXBuffer:= iq_stSerialRXBuffer, iq_stSerialTXBuffer:= iq_stSerialTXBuffer, i_CmdFlag :=FALSE);  (* reset *)
             iStep := 5000;
