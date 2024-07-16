@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<TcModuleClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2009/05/TcModuleClass" Hash="{468087D9-7714-E830-CD8B-8F3D6D2C62ED}" GeneratedBy="TwinCAT XAE Plc">
+<TcModuleClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2009/05/TcModuleClass" Hash="{D9A84737-EAC2-39A8-4354-B493552973AF}" GeneratedBy="TwinCAT XAE Plc">
   <DataTypes>
     <DataType>
       <Name GUID="{18071995-0000-0000-0000-000000000041}" TcBaseType="true" HideSubItems="true" CName="AmsNetId">AMSNETID</Name>
@@ -12022,7 +12022,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: 01
-        io: i
+        io: io
      </Value>
           </Property>
         </Properties>
@@ -12037,7 +12037,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: 02
-        io: i
+        io: io
      </Value>
           </Property>
         </Properties>
@@ -12052,7 +12052,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: 03
-        io: i
+        io: io
      </Value>
           </Property>
         </Properties>
@@ -12067,7 +12067,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: 04
-        io: i
+        io: io
      </Value>
           </Property>
         </Properties>
@@ -12082,7 +12082,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: 05
-        io: i
+        io: io
      </Value>
           </Property>
         </Properties>
@@ -12097,7 +12097,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: 06
-        io: i
+        io: io
      </Value>
           </Property>
         </Properties>
@@ -12112,7 +12112,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: 07
-        io: i
+        io: io
      </Value>
           </Property>
         </Properties>
@@ -12127,7 +12127,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: 08
-        io: i
+        io: io
      </Value>
           </Property>
         </Properties>
@@ -12142,7 +12142,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: 09
-        io: i
+        io: io
      </Value>
           </Property>
         </Properties>
@@ -12157,7 +12157,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: 10
-        io: i
+        io: io
      </Value>
           </Property>
         </Properties>
@@ -12172,7 +12172,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: 11
-        io: i
+        io: io
      </Value>
           </Property>
         </Properties>
@@ -12187,7 +12187,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: 12
-        io: i
+        io: io
      </Value>
           </Property>
         </Properties>
@@ -12396,7 +12396,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
             <Name>pytmc</Name>
             <Value>
         pv: SampleNames
-        io: i
+        io: io
     </Value>
           </Property>
         </Properties>
@@ -24160,7 +24160,7 @@ WC bit tells you if the sync unit is OK, which tells you if cluster is alive</Co
         </Property>
         <Property>
           <Name>ChangeDate</Name>
-          <Value>2023-05-19T09:29:16</Value>
+          <Value>2024-05-02T15:32:22</Value>
         </Property>
         <Property>
           <Name>GeneratedCodeSize</Name>
