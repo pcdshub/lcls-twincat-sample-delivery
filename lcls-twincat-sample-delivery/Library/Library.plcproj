@@ -111,6 +111,9 @@
     <Compile Include="DUTs\TEC\ST_TECStatus.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\Vici\ST_4PViciValveSampleNames.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\Vici\ST_ViciControl.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -199,10 +202,16 @@
     <Compile Include="POUs\TEC\FB_TECTransaction.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\VICI\FB_4PortViciValve.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\VICI\FB_ViciDriver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\VICI\FB_ViciTransaction.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\VICI\FB_ViciValve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
