@@ -202,13 +202,16 @@
     <Compile Include="POUs\TEC\FB_TECTransaction.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\VICI\FB_4PViciValve.TcPOU">
+    <Compile Include="POUs\VICI\FB_4PortViciValve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\VICI\FB_ViciDriver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\VICI\FB_ViciTransaction.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\VICI\FB_ViciValve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
