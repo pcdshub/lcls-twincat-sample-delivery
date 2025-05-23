@@ -17,7 +17,7 @@
     <LibraryReferences>{81f311d6-a79c-473d-a5d2-d31e1a3735a4}</LibraryReferences>
     <Company>SLAC</Company>
     <Released>false</Released>
-    <ProjectVersion>0.0.0</ProjectVersion>
+    <ProjectVersion>1.0.0</ProjectVersion>
     <Title>lcls-twincat-sample-delivery</Title>
   </PropertyGroup>
   <ItemGroup>
@@ -151,6 +151,9 @@
     <Compile Include="POUs\DigitalOutput\FB_SolenoidPair.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FB_RCC.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\GasManifold\FB_GasManifold.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -169,10 +172,13 @@
     <Compile Include="POUs\Helpers\FB_ShiftByteArray.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\TEST.TcPOU">
+    <Compile Include="POUs\EXAMPLE_DEPLOYMENT.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\PCM\FB_PressureControlModule.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\PRG_TEST.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Regulators\FB_ProportionairRegulator.TcPOU">
@@ -200,6 +206,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\TEC\FB_TECTransaction.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Tests\FB_RCC_TEST.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\VICI\FB_4PortViciValve.TcPOU">
@@ -231,6 +240,7 @@
     <Folder Include="POUs\Flowmeters" />
     <Folder Include="POUs\GasManifold" />
     <Folder Include="POUs\Helpers" />
+    <Folder Include="POUs\Tests" />
     <Folder Include="POUs\PCM" />
     <Folder Include="POUs\Regulators" />
     <Folder Include="POUs\Selectors" />
@@ -244,6 +254,14 @@
     <PlaceholderReference Include="LCLS General">
       <DefaultResolution>LCLS General, * (SLAC)</DefaultResolution>
       <Namespace>LCLS_General</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="LCLS Vacuum">
+      <DefaultResolution>LCLS Vacuum, * (SLAC - LCLS)</DefaultResolution>
+      <Namespace>LCLS_Vacuum</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="PMPS">
+      <DefaultResolution>PMPS, * (SLAC - LCLS)</DefaultResolution>
+      <Namespace>PMPS</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_EtherCAT">
       <DefaultResolution>Tc2_EtherCAT, * (Beckhoff Automation GmbH)</DefaultResolution>
@@ -281,6 +299,10 @@
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="TcUnit">
+      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
+      <Namespace>TcUnit</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Library.tmc">
@@ -289,7 +311,16 @@
   </ItemGroup>
   <ItemGroup>
     <PlaceholderResolution Include="LCLS General">
-      <Resolution>LCLS General, 2.4.2 (SLAC)</Resolution>
+      <Resolution>LCLS General, 2.12.0 (SLAC)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="LCLS Vacuum">
+      <Resolution>LCLS Vacuum, 2.4.1 (SLAC - LCLS)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="LCLSVacuumSerialDriverLib">
+      <Resolution>LCLSVacuumSerialDriverLib, 1.3.3 (SLAC - LCLS)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="PMPS">
+      <Resolution>PMPS, 3.5.1 (SLAC - LCLS)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="Tc2_EtherCAT">
       <Resolution>Tc2_EtherCAT, 3.3.13.0 (Beckhoff Automation GmbH)</Resolution>
@@ -317,6 +348,9 @@
     </PlaceholderResolution>
     <PlaceholderResolution Include="Tc3_Module">
       <Resolution>Tc3_Module, 3.3.21.0 (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="TcUnit">
+      <Resolution>TcUnit, 1.2.0.0 (www.tcunit.org)</Resolution>
     </PlaceholderResolution>
   </ItemGroup>
   <ProjectExtensions>

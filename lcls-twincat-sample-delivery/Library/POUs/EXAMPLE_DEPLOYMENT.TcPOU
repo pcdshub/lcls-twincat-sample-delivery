@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="TEST" Id="{42c5d645-8f72-4a7d-9897-ab636f1cee6d}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM TEST
+  <POU Name="EXAMPLE_DEPLOYMENT" Id="{42c5d645-8f72-4a7d-9897-ab636f1cee6d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM EXAMPLE_DEPLOYMENT
 VAR
 {attribute 'pytmc' := 'pv: @(P):SEL:A'}
 {attribute 'TcLinkTo' := '.stSensSerial.stComIn.Status := TIIB[M3 Selector A Serial IO (EP6002-0002)]^COM TxPDO-Map Inputs Channel 1^Status;
