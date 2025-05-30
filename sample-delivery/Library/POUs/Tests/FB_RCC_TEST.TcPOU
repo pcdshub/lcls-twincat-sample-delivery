@@ -2,11 +2,14 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="FB_RCC_TEST" Id="{601daf38-e4c9-4c7e-b134-2d83b8bfe7a2}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_RCC_TEST EXTENDS FB_TestSuite
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
 VAR
+	RCC_VRC_01 : FB_VRC_NC_ClsLS;
+	RCC_VRC_02 : FB_VRC;
+	RCC_VRC_03 : FB_VRC_NC_ClsLS;
+	RCC_VRC_04 : FB_VRC_NC_ClsLS;
+	RCC_GCP_01 : FB_901_ECAT;
+	
+	fbRCC : FB_RCC;
 END_VAR
 ]]></Declaration>
     <Implementation>
