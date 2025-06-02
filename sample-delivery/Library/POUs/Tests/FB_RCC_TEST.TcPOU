@@ -39,25 +39,14 @@ END_VAR
       <Implementation>
         <ST><![CDATA[TEST('TestSingleCyleExpectToTransitionThoughOneCycle');
 
+tTimer1(IN:=TRUE, PT:=T#46s);
+
 IF bInitTest THEN
 	fbRCC.start_cycle();
 	bInitTest := FALSE;
-	AssertEquals_INT(Expected:=-1, 
+	AssertEquals_INT(Expected:= E_RCC_STATES.IDLE, 
 		Actual:= fbRCC.current_state, 
 		Message:= 'DID NOT START AT FIRST STATE');
-END_IF
-
-tTimer1(IN:=TRUE, PT:=T#45S500ms);
-
-// Enable RCC_VRC_03_OPEN_OK SO WE CAN MOVE ONTO NEXT STATE
-(* Valve can open only when CRIX-RCC-GCP-01 reading < setpoint Torr and CRIX-RCC-VRC-01 and 04 are closed*)
-IF fbRCC.current_state = 2 THEN
-	stRCC_GCP_01.rPRESS := 0; 
-	stRCC_GCP_01.xPRESS_OK  := TRUE;
-	stRCC_VRC_01.i_xClsLS := TRUE;
-	stRCC_VRC_01.q_xOPN_DO := FALSE;
-	stRCC_VRC_04.i_xClsLS := TRUE;
-	stRCC_VRC_04.q_xOPN_DO := FALSE;
 END_IF
 
 fbRCC(stRCC_GCP_01:=stRCC_GCP_01,
@@ -68,12 +57,22 @@ fbRCC(stRCC_GCP_01:=stRCC_GCP_01,
 );
 
 // CHECK IF WE HAVE SEEN ALL THE STATES
-IF fbRCC.current_state = 0 THEN bSeenStateZero := TRUE; END_IF
-IF fbRCC.current_state = 1 THEN bSeenStateOne := TRUE; END_IF
-IF fbRCC.current_state = 2 THEN bSeenStateTwo := TRUE; END_IF
-IF fbRCC.current_state = 3 THEN bSeenStateThree := TRUE; END_IF
-IF fbRCC.current_state = 4 THEN bSeenStateFour := TRUE; END_IF
-IF fbRCC.current_state = 5 THEN bSeenStateFive :=TRUE; END_IF
+IF fbRCC.current_state = E_RCC_STATES.INIT THEN bSeenStateZero := TRUE; END_IF
+IF fbRCC.current_state = E_RCC_STATES.OPEN_VRC_02_FOR_T1 THEN bSeenStateOne := TRUE; END_IF
+IF fbRCC.current_state = E_RCC_STATES.DRAIN THEN 
+	// Enable RCC_VRC_03_OPEN_OK SO WE CAN MOVE ONTO NEXT STATE
+	(* Valve can open only when CRIX-RCC-GCP-01 reading < setpoint Torr and CRIX-RCC-VRC-01 and 04 are closed*)
+	bSeenStateTwo := TRUE;
+	stRCC_GCP_01.rPRESS := 0; 
+	stRCC_GCP_01.xPRESS_OK  := TRUE;
+	stRCC_VRC_01.i_xClsLS := TRUE;
+	stRCC_VRC_01.q_xOPN_DO := FALSE;
+	stRCC_VRC_04.i_xClsLS := TRUE;
+	stRCC_VRC_04.q_xOPN_DO := FALSE;
+ END_IF
+IF fbRCC.current_state = E_RCC_STATES.DRAIN_CHECK THEN bSeenStateThree := TRUE; END_IF
+IF fbRCC.current_state = E_RCC_STATES.OPEN_VRC_01_FOR_T3 THEN bSeenStateFour := TRUE; END_IF
+IF fbRCC.current_state = E_RCC_STATES.OPEN_VRC_04_FOR_T4 THEN bSeenStateFive :=TRUE; END_IF
 
 		// THIS IS A TEST
 
@@ -98,21 +97,21 @@ END_IF
       <LineId Id="219" Count="0" />
     </LineIds>
     <LineIds Name="FB_RCC_TEST.TestSingleCyleExpectToTransitionThoughOneCycle">
-      <LineId Id="55" Count="4" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="56" Count="3" />
       <LineId Id="105" Count="0" />
       <LineId Id="107" Count="1" />
-      <LineId Id="60" Count="2" />
-      <LineId Id="104" Count="0" />
-      <LineId Id="99" Count="0" />
-      <LineId Id="95" Count="0" />
-      <LineId Id="94" Count="0" />
-      <LineId Id="96" Count="0" />
-      <LineId Id="98" Count="0" />
-      <LineId Id="100" Count="3" />
-      <LineId Id="97" Count="0" />
+      <LineId Id="60" Count="0" />
       <LineId Id="63" Count="6" />
       <LineId Id="128" Count="0" />
       <LineId Id="130" Count="3" />
+      <LineId Id="164" Count="1" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="157" Count="4" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="155" Count="0" />
       <LineId Id="136" Count="0" />
       <LineId Id="135" Count="0" />
       <LineId Id="122" Count="0" />
