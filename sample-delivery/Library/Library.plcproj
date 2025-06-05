@@ -22,10 +22,12 @@
     <Folder Include="DUTs\Bronkhorst" />
     <Folder Include="DUTs\General" />
     <Folder Include="DUTs\IO_Structs" />
+    <Folder Include="DUTs\RCC" />
     <Folder Include="DUTs\Sensirion" />
     <Folder Include="DUTs\TEC" />
     <Folder Include="DUTs\Vici" />
     <Folder Include="GVLs" />
+    <Folder Include="POUs\RCC" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
     <Folder Include="POUs\ALI" />
@@ -89,6 +91,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\IO_Structs\ST_SerialComm.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\RCC\E_RCC_STATES.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\RCC\ST_RCC.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Sensirion\E_SensirionFMMode.TcTLEO">
@@ -175,9 +183,6 @@
     <Compile Include="POUs\EXAMPLE_DEPLOYMENT.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_RCC.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\GasManifold\FB_GasManifold.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -200,6 +205,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\PRG_TEST.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\RCC\FB_RCC.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\RCC\FB_RCC_SM.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Regulators\FB_ProportionairRegulator.TcPOU">
@@ -246,13 +257,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <PlaceholderReference Include="L2SI Vacuum Library">
-      <DefaultResolution>L2SI Vacuum Library, * (SLAC)</DefaultResolution>
-      <Namespace>L2SI_Vacuum_Library</Namespace>
+    <PlaceholderReference Include="LCLS Vacuum">
+      <DefaultResolution>LCLS Vacuum, * (SLAC - LCLS)</DefaultResolution>
+      <Namespace>LCLS_Vacuum</Namespace>
     </PlaceholderReference>
-    <PlaceholderReference Include="LCLS General">
-      <DefaultResolution>LCLS General, * (SLAC)</DefaultResolution>
-      <Namespace>LCLS_General</Namespace>
+    <PlaceholderReference Include="PMPS">
+      <DefaultResolution>PMPS, * (SLAC - LCLS)</DefaultResolution>
+      <Namespace>PMPS</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_EtherCAT">
       <DefaultResolution>Tc2_EtherCAT, * (Beckhoff Automation GmbH)</DefaultResolution>
@@ -285,12 +296,6 @@
     <PlaceholderReference Include="Tc2_Utilities">
       <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Utilities</Namespace>
-      <Parameters>
-        <Parameter ListName="PARAMETERLIST" xmlns="">
-          <Key>CMAXCHARACTERS</Key>
-          <Value>16#FFFFFFF0</Value>
-        </Parameter>
-      </Parameters>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
@@ -302,42 +307,61 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <PlaceholderResolution Include="L2SI Vacuum Library">
-      <Resolution>L2SI Vacuum Library, 1.1.1 (SLAC)</Resolution>
-    </PlaceholderResolution>
     <PlaceholderResolution Include="LCLS General">
       <Resolution>LCLS General, 2.12.0 (SLAC)</Resolution>
     </PlaceholderResolution>
-    <PlaceholderResolution Include="PMPS">
-      <Resolution>PMPS, 3.6.0 (SLAC - LCLS)</Resolution>
+    <PlaceholderResolution Include="LCLS Vacuum">
+      <Resolution>LCLS Vacuum, 2.4.2 (SLAC - LCLS)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="Tc2_EtherCAT">
-      <Resolution>Tc2_EtherCAT, 3.3.13.0 (Beckhoff Automation GmbH)</Resolution>
+      <Resolution>Tc2_EtherCAT, 3.5.1.0 (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="Tc2_MC2">
-      <Resolution>Tc2_MC2, 3.3.37.0 (Beckhoff Automation GmbH)</Resolution>
+      <Resolution>Tc2_MC2, 3.3.69.0 (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="Tc2_ModbusSrv">
-      <Resolution>Tc2_ModbusSrv, 3.3.1.0 (Beckhoff Automation GmbH)</Resolution>
+      <Resolution>Tc2_ModbusSrv, 3.3.2.0 (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="Tc2_SerialCom">
-      <Resolution>Tc2_SerialCom, 3.3.6.0 (Beckhoff Automation GmbH)</Resolution>
+      <Resolution>Tc2_SerialCom, 3.4.4.0 (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="Tc2_Standard">
-      <Resolution>Tc2_Standard, 3.3.2.0 (Beckhoff Automation GmbH)</Resolution>
+      <Resolution>Tc2_Standard, 3.4.5.0 (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="Tc2_SUPS">
-      <Resolution>Tc2_SUPS, 3.3.6.0 (Beckhoff Automation GmbH)</Resolution>
+      <Resolution>Tc2_SUPS, 3.4.3.0 (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="Tc2_System">
-      <Resolution>Tc2_System, 3.4.22.0 (Beckhoff Automation GmbH)</Resolution>
+      <Resolution>Tc2_System, 3.6.4.0 (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_TcpIp">
+      <Resolution>Tc2_TcpIp, 3.4.2.0 (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="Tc2_Utilities">
-      <Resolution>Tc2_Utilities, 3.3.35.0 (Beckhoff Automation GmbH)</Resolution>
+      <Resolution>Tc2_Utilities, 3.9.2.0 (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc3_EventLogger">
+      <Resolution>Tc3_EventLogger, 3.3.13.0 (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc3_JsonXml">
+      <Resolution>Tc3_JsonXml, 3.4.7.0 (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="Tc3_Module">
-      <Resolution>Tc3_Module, 3.3.21.0 (Beckhoff Automation GmbH)</Resolution>
+      <Resolution>Tc3_Module, 3.4.5.0 (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
+    <PlaceholderResolution Include="TcUnit">
+      <Resolution>TcUnit, 1.3.1 (www.tcunit.org)</Resolution>
+    </PlaceholderResolution>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Library.tmc">
+      <SubType>Content</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <LibraryReference Include="LCLS General,2.12.0,SLAC">
+      <Namespace>LCLS_General</Namespace>
+    </LibraryReference>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
