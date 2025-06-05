@@ -4,17 +4,37 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_RCC_TEST EXTENDS FB_TestSuite
 VAR
 	fbRCC : FB_RCC;
-	
+	stRCC_CTL : ST_RCC;
 	stRCC_VRC_01 : ST_VRC;
 	stRCC_VRC_02 : ST_VRC;
 	stRCC_VRC_03 : ST_VRC;
 	stRCC_VRC_04 : ST_VRC;
 	stRCC_GCP_01 : ST_VG;
-
-	
 	tTimer1 : TON;
 	bInitTest : BOOL := TRUE;
 	xSystemOverrideMode_RCC: BOOL := FALSE;
+	
+	fbRCC1 : FB_RCC;
+	stRCC1_CTL : ST_RCC;
+	stRCC_VRC_01_01 : ST_VRC;
+	stRCC_VRC_02_01 : ST_VRC;
+	stRCC_VRC_03_01 : ST_VRC;
+	stRCC_VRC_04_01 : ST_VRC;
+	stRCC_GCP_01_01 : ST_VG;
+	tTimer1_01 : TON;
+	bInitTest_01 : BOOL := TRUE;
+	xSystemOverrideMode_RCC_01: BOOL := FALSE;
+	
+	fbRCC2 : FB_RCC;
+	stRCC2_CTL : ST_RCC;
+	stRCC_VRC_01_02 : ST_VRC;
+	stRCC_VRC_02_02 : ST_VRC;
+	stRCC_VRC_03_02 : ST_VRC;
+	stRCC_VRC_04_02 : ST_VRC;
+	stRCC_GCP_01_02 : ST_VG;
+	tTimer1_02 : TON;
+	bInitTest_02 : BOOL := TRUE;
+	xSystemOverrideMode_RCC_02: BOOL := FALSE;
 	
 	// VARS FOR TestSingleCyleExpectToTransitionThoughOneCycle
 	bSeenStateZero : BOOL := FALSE;
@@ -23,12 +43,91 @@ VAR
 	bSeenStateThree : BOOL := FALSE;
 	bSeenStateFour : BOOL := FALSE;
 	bSeenStateFive : BOOL := FALSE;
+	
+	// VARS FOR TestStopCycleExpectToReturnToIdleState
+	iDrainCount : INT := 0;
 
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[TestSingleCyleExpectToTransitionThoughOneCycle();]]></ST>
+      <ST><![CDATA[TestSingleCyleExpectToTransitionThoughOneCycle();
+TestErrorExpectToTransitionToErroState();
+TestStopCycleExpectToReturnToIdleState();]]></ST>
     </Implementation>
+    <Method Name="TestErrorExpectToTransitionToErroState" Id="{be7cda11-b5de-4ecd-bb07-02ca724d97e3}">
+      <Declaration><![CDATA[METHOD TestErrorExpectToTransitionToErroState : REFERENCE TO FB_Test
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('TestErrorExpectToTransitionToErroState');
+
+tTimer1_01(IN:=TRUE, PT:=T#46S);
+
+IF bInitTest_01 THEN
+	stRCC1_CTL.bStartCycle := TRUE;
+	bInitTest_01 := FALSE;
+	AssertEquals_INT(Expected:= E_RCC_STATES.IDLE, 
+		Actual:= stRCC1_CTL.eCurrentState, 
+		Message:= 'DID NOT START IN IDLE STATE');
+END_IF
+
+fbRCC1(stRCC_GCP_01:=stRCC_GCP_01_01,
+	stRCC_VRC_01:= stRCC_VRC_01_01,
+	stRCC_VRC_02:= stRCC_VRC_02_01,
+	stRCC_VRC_03:= stRCC_VRC_03_01,
+	stRCC_VRC_04:= stRCC_VRC_04_01,
+	stRCC_CTL:= stRCC1_CTL
+);
+
+
+IF stRCC1_CTL.eCurrentState = E_RCC_STATES.DRAIN THEN 
+	// Enable RCC_VRC_03_OPEN_OK SO WE CAN MOVE ONTO NEXT STATE
+	(* Valve can open only when CRIX-RCC-GCP-01 reading < setpoint Torr and CRIX-RCC-VRC-01 and 04 are closed*)
+	stRCC_GCP_01_01.rPRESS := 0; 
+	stRCC_GCP_01_01.xPRESS_OK  := FALSE;
+	stRCC_VRC_01_01.i_xClsLS := TRUE;
+	stRCC_VRC_01_01.q_xOPN_DO := FALSE;
+	stRCC_VRC_04_01.i_xClsLS := TRUE;
+	stRCC_VRC_04_01.q_xOPN_DO := FALSE;
+ END_IF
+
+				 
+IF tTimer1_01.Q OR stRCC1_CTL.bError THEN
+	AssertEquals_BOOL(Expected:= stRCC1_CTL.bError , 
+		Actual:= TRUE, 
+		Message:= 'ERROR FLAG NOT SET');	
+	
+	AssertEquals_INT(Expected:=E_RCC_STATES.ERROR , 
+		Actual:= stRCC1_CTL.eCurrentState, 
+		Message:= 'NOT IN ERROR STATE');	
+		
+	stRCC1_CTL.bClearError := TRUE; // CLEAR ERRORS
+	
+	//CYCLE ONE MORE TIME TO SEE IF ERRORS CLEARD
+	fbRCC1(stRCC_GCP_01:=stRCC_GCP_01_01,
+		stRCC_VRC_01:= stRCC_VRC_01_01,
+		stRCC_VRC_02:= stRCC_VRC_02_01,
+		stRCC_VRC_03:= stRCC_VRC_03_01,
+		stRCC_VRC_04:= stRCC_VRC_04_01,
+		stRCC_CTL := stRCC1_CTL
+	);
+
+	
+	AssertEquals_BOOL(Expected:= stRCC1_CTL.bError , 
+		Actual:= FALSE, 
+		Message:= 'ERROR FLAG NOT CLEARD');	
+	
+	AssertEquals_INT(Expected:=E_RCC_STATES.IDLE , 
+		Actual:= stRCC1_CTL.eCurrentState, 
+		Message:= 'NOT IN IDLE STATE');
+
+	TEST_FINISHED();
+	bInitTest_01 := TRUE;
+	tTimer1_01(IN:=FALSE, PT:=T#46S);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="TestSingleCyleExpectToTransitionThoughOneCycle" Id="{3c03b652-ff1d-4d2b-b8cf-f86da69ec7c0}">
       <Declaration><![CDATA[METHOD TestSingleCyleExpectToTransitionThoughOneCycle : REFERENCE TO FB_Test
 VAR_INPUT
@@ -42,10 +141,10 @@ END_VAR
 tTimer1(IN:=TRUE, PT:=T#46s);
 
 IF bInitTest THEN
-	fbRCC.start_cycle();
+	stRCC_CTL.bStartCycle := TRUE;
 	bInitTest := FALSE;
 	AssertEquals_INT(Expected:= E_RCC_STATES.IDLE, 
-		Actual:= fbRCC.current_state, 
+		Actual:= stRCC_CTL.eCurrentState, 
 		Message:= 'DID NOT START AT FIRST STATE');
 END_IF
 
@@ -53,13 +152,14 @@ fbRCC(stRCC_GCP_01:=stRCC_GCP_01,
 	stRCC_VRC_01:= stRCC_VRC_01,
 	stRCC_VRC_02:= stRCC_VRC_02,
 	stRCC_VRC_03:= stRCC_VRC_03,
-	stRCC_VRC_04:= stRCC_VRC_04
+	stRCC_VRC_04:= stRCC_VRC_04,
+	stRCC_CTL := stRCC_CTL
 );
 
 // CHECK IF WE HAVE SEEN ALL THE STATES
-IF fbRCC.current_state = E_RCC_STATES.INIT THEN bSeenStateZero := TRUE; END_IF
-IF fbRCC.current_state = E_RCC_STATES.OPEN_VRC_02_FOR_T1 THEN bSeenStateOne := TRUE; END_IF
-IF fbRCC.current_state = E_RCC_STATES.DRAIN THEN 
+IF stRCC_CTL.eCurrentState = E_RCC_STATES.INIT THEN bSeenStateZero := TRUE; END_IF
+IF stRCC_CTL.eCurrentState = E_RCC_STATES.OPEN_VRC_02_FOR_T1 THEN bSeenStateOne := TRUE; END_IF
+IF stRCC_CTL.eCurrentState = E_RCC_STATES.DRAIN THEN 
 	// Enable RCC_VRC_03_OPEN_OK SO WE CAN MOVE ONTO NEXT STATE
 	(* Valve can open only when CRIX-RCC-GCP-01 reading < setpoint Torr and CRIX-RCC-VRC-01 and 04 are closed*)
 	bSeenStateTwo := TRUE;
@@ -70,9 +170,9 @@ IF fbRCC.current_state = E_RCC_STATES.DRAIN THEN
 	stRCC_VRC_04.i_xClsLS := TRUE;
 	stRCC_VRC_04.q_xOPN_DO := FALSE;
  END_IF
-IF fbRCC.current_state = E_RCC_STATES.DRAIN_CHECK THEN bSeenStateThree := TRUE; END_IF
-IF fbRCC.current_state = E_RCC_STATES.OPEN_VRC_01_FOR_T3 THEN bSeenStateFour := TRUE; END_IF
-IF fbRCC.current_state = E_RCC_STATES.OPEN_VRC_04_FOR_T4 THEN bSeenStateFive :=TRUE; END_IF
+IF stRCC_CTL.eCurrentState = E_RCC_STATES.DRAIN_CHECK THEN bSeenStateThree := TRUE; END_IF
+IF stRCC_CTL.eCurrentState = E_RCC_STATES.OPEN_VRC_01_FOR_T3 THEN bSeenStateFour := TRUE; END_IF
+IF stRCC_CTL.eCurrentState = E_RCC_STATES.OPEN_VRC_04_FOR_T4 THEN bSeenStateFive :=TRUE; END_IF
 
 		// THIS IS A TEST
 
@@ -89,12 +189,86 @@ IF tTimer1.Q THEN
 		Message:= 'HAVE NOT VISITED ALL STATES');
 	TEST_FINISHED();
 	bInitTest := TRUE;
+	tTimer1(IN:=FALSE, PT:=T#46S);
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStopCycleExpectToReturnToIdleState" Id="{b681e18c-3a41-4dc6-bab7-3a3f4baaa0ad}">
+      <Declaration><![CDATA[METHOD TestStopCycleExpectToReturnToIdleState : REFERENCE TO FB_Test
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('TestStopCycleExpectToReturnToIdleState');
+
+tTimer1_02(PT:=T#500ms);
+
+IF bInitTest_02 THEN
+	stRCC2_CTL.bStartCycle := TRUE;
+	bInitTest_02 := FALSE;
+	tTimer1_02.IN:=FALSE;
+	AssertEquals_INT(Expected:= E_RCC_STATES.IDLE, 
+		Actual:= stRCC2_CTL.eCurrentState, 
+		Message:= 'DID NOT START AT FIRST STATE');
+END_IF
+
+fbRCC2(	stRCC_GCP_01:= stRCC_GCP_01_02,
+		stRCC_VRC_01:= stRCC_VRC_01_02,
+		stRCC_VRC_02:= stRCC_VRC_02_02,
+		stRCC_VRC_03:= stRCC_VRC_03_02,
+		stRCC_VRC_04:= stRCC_VRC_04_02,
+		stRCC_CTL := stRCC2_CTL
+);
+
+IF stRCC2_CTL.eCurrentState = E_RCC_STATES.DRAIN THEN 
+	// Enable RCC_VRC_03_OPEN_OK SO WE CAN MOVE ONTO NEXT STATE
+	(* Valve can open only when CRIX-RCC-GCP-01 reading < setpoint Torr and CRIX-RCC-VRC-01 and 04 are closed*)
+	stRCC_GCP_01_02.rPRESS := 20; 
+	stRCC_GCP_01_02.xPRESS_OK  := TRUE;
+	stRCC_VRC_01_02.i_xClsLS := TRUE;
+	stRCC_VRC_01_02.q_xOPN_DO := FALSE;
+	stRCC_VRC_04_02.i_xClsLS := TRUE;
+	stRCC_VRC_04_02.q_xOPN_DO := FALSE;
+	tTimer1_02.IN:=TRUE;
+	stRCC2_CTL.bStop := TRUE;
+ END_IF
+ 
+
+IF tTimer1_02.Q THEN
+	AssertEquals_INT(Expected:= E_RCC_STATES.IDLE, 
+		Actual:= stRCC2_CTL.eCurrentState, 
+		Message:= 'DID NOT END IN IDLE STATE');
+	TEST_FINISHED();
+	bInitTest_02 := TRUE;
 END_IF
 ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_RCC_TEST">
       <LineId Id="219" Count="0" />
+      <LineId Id="244" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_RCC_TEST.TestErrorExpectToTransitionToErroState">
+      <LineId Id="80" Count="4" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="86" Count="10" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="101" Count="3" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="106" Count="16" />
+      <LineId Id="144" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="149" Count="4" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="123" Count="10" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_RCC_TEST.TestSingleCyleExpectToTransitionThoughOneCycle">
       <LineId Id="55" Count="0" />
@@ -104,7 +278,9 @@ END_IF
       <LineId Id="105" Count="0" />
       <LineId Id="107" Count="1" />
       <LineId Id="60" Count="0" />
-      <LineId Id="63" Count="6" />
+      <LineId Id="63" Count="5" />
+      <LineId Id="179" Count="0" />
+      <LineId Id="69" Count="0" />
       <LineId Id="128" Count="0" />
       <LineId Id="130" Count="3" />
       <LineId Id="164" Count="1" />
@@ -123,8 +299,32 @@ END_IF
       <LineId Id="144" Count="4" />
       <LineId Id="90" Count="2" />
       <LineId Id="41" Count="0" />
+      <LineId Id="173" Count="0" />
       <LineId Id="51" Count="0" />
       <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_RCC_TEST.TestStopCycleExpectToReturnToIdleState">
+      <LineId Id="6" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="10" Count="2" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="13" Count="9" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="27" Count="3" />
+      <LineId Id="32" Count="5" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="63" Count="1" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="56" Count="2" />
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

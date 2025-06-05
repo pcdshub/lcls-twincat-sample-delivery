@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="ST_RCC" Id="{1b353780-7d91-4e7e-9358-dff7c26eabba}">
+    <Declaration><![CDATA[TYPE ST_RCC :
+STRUCT
+	{attribute 'pytmc' :=' pv: T1 '}
+	T1 : TIME := T#20S;
+	{attribute 'pytmc' :=' pv: T2 '}
+	T2 : TIME := T#10S;
+	{attribute 'pytmc' :=' pv: T3 '}
+	T3 : TIME := T#5S;
+	{attribute 'pytmc' :=' pv: T4 '}
+	T4 : TIME := T#10S;
+	{attribute 'pytmc' :=' pv: RUNCLEAN'}
+	bRunClean : BOOL := TRUE;
+	
+	{attribute 'pytmc' :=' pv: CLEAR_ERROR'}
+	bClearError : BOOL := FALSE;
+	{attribute 'pytmc' :=' pv: ERROR'}
+	bError : BOOL := FALSE;
+	{attribute 'pytmc' :=' pv: STOP_CYCLE'}
+	bStop : BOOL := FALSE;
+	
+	{attribute 'pytmc' :=' pv: START_CYCLE'}
+	bStartCycle : BOOL  := FALSE;
+	
+	{attribute 'pytmc' :=' pv: ILK_Setpoint '}
+    RCC_GCP_01_INTERLOCK_SETPOINT : REAL := 10;
+	{attribute 'pytmc' :=' pv: OverrideMode '}
+	xSystemOverrideMode_RCC : BOOL := FALSE;
+	
+	eCurrentState : INT := E_RCC_STATES.IDLE;
+	{attribute 'pytmc' :=' pv: sLogMessage '}
+	sLogMessage : T_MaxString := '';
+	
+	RCC_VRC_01_OPEN_OK : BOOL;
+    RCC_VRC_02_OPEN_OK : BOOL;
+    RCC_VRC_03_OPEN_OK : BOOL;
+    RCC_VRC_04_OPEN_OK : BOOL;
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

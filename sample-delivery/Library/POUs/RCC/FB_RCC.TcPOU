@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="FB_RCC" Id="{7003c15e-7f35-4bdc-b753-d97dc650dfad}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_RCC
+VAR_IN_OUT
+	stRCC_VRC_01 : ST_VRC;
+	stRCC_VRC_02 : ST_VRC;
+	stRCC_VRC_03 : ST_VRC;
+	stRCC_VRC_04 : ST_VRC;
+	stRCC_GCP_01 : ST_VG;
+	stRCC_CTL : ST_RCC;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	fbRCC : FB_RCC_SM; // RCC STATE MATCHINE
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbRCC(
+	stRCC_VRC_01 := stRCC_VRC_01,
+	stRCC_VRC_02 := stRCC_VRC_02,
+	stRCC_VRC_03 := stRCC_VRC_03,
+	stRCC_VRC_04 := stRCC_VRC_04,
+	stRCC_GCP_01 := stRCC_GCP_01,
+	T1 := stRCC_CTL.T1,
+	T2 := stRCC_CTL.T2,
+	T3 := stRCC_CTL.T3,
+	T4 := stRCC_CTL.T4,
+	bRunClean := stRCC_CTL.bRunClean,
+	bClearError := stRCC_CTL.bClearError,
+	bError := stRCC_CTL.bError,
+	bStop := stRCC_CTL.bStop,
+	bStartCycle := stRCC_CTL.bStartCycle,
+	RCC_GCP_01_INTERLOCK_SETPOINT := stRCC_CTL.RCC_GCP_01_INTERLOCK_SETPOINT,
+	xSystemOverrideMode_RCC := stRCC_CTL.xSystemOverrideMode_RCC,
+	eCurrentState := stRCC_CTL.eCurrentState,
+	sLogMessage := stRCC_CTL.sLogMessage,
+	RCC_VRC_01_OPEN_OK := stRCC_CTL.RCC_VRC_01_OPEN_OK,
+	RCC_VRC_02_OPEN_OK := stRCC_CTL.RCC_VRC_02_OPEN_OK,
+	RCC_VRC_03_OPEN_OK := stRCC_CTL.RCC_VRC_03_OPEN_OK,
+	RCC_VRC_04_OPEN_OK := stRCC_CTL.RCC_VRC_04_OPEN_OK
+	);
+	
+	]]></ST>
+    </Implementation>
+    <LineIds Name="FB_RCC">
+      <LineId Id="9" Count="0" />
+      <LineId Id="76" Count="5" />
+      <LineId Id="83" Count="12" />
+      <LineId Id="97" Count="3" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="82" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
