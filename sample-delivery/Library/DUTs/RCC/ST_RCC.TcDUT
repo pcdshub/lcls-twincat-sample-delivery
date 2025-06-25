@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <DUT Name="ST_RCC" Id="{1b353780-7d91-4e7e-9358-dff7c26eabba}">
     <Declaration><![CDATA[TYPE ST_RCC :
 STRUCT
 	{attribute 'pytmc' :=' pv: T1 '}
-	T1 : TIME := T#20S;
+	T1 : STRING := TIME_TO_STRING(T#20S);
 	{attribute 'pytmc' :=' pv: T2 '}
-	T2 : TIME := T#10S;
+	T2 : STRING := TIME_TO_STRING(T#10S);
 	{attribute 'pytmc' :=' pv: T3 '}
-	T3 : TIME := T#5S;
+	T3 : STRING := TIME_TO_STRING(T#5S);
 	{attribute 'pytmc' :=' pv: T4 '}
-	T4 : TIME := T#10S;
+	T4 : STRING := TIME_TO_STRING(T#10S);
 	{attribute 'pytmc' :=' pv: RUNCLEAN'}
 	bRunClean : BOOL := TRUE;
 	

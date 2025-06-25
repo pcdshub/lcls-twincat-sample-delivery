@@ -15,6 +15,10 @@
     <Implicit_KindOfTask>{2ae67528-f34b-4fa2-b743-cc7c527c76a7}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{ee4a008e-3fc6-4185-92b5-c3a57c0f2c5e}</Implicit_Jitter_Distribution>
     <LibraryReferences>{6f5799fa-7bce-4f89-8794-1ee6574da6eb}</LibraryReferences>
+    <Company>SLAC - LCLS</Company>
+    <Released>false</Released>
+    <Title>LCLS Sample Delivery</Title>
+    <ProjectVersion>0.0.0</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="DUTs" />

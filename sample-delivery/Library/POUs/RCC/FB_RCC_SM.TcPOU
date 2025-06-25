@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="FB_RCC_SM" Id="{47a0acf2-060b-4e55-9edc-089d8f8e62bc}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_RCC_SM
 VAR_IN_OUT
@@ -13,6 +13,7 @@ VAR_IN_OUT
 	T2 : TIME;	
 	T3 : TIME;	
 	T4 : TIME;	
+	
 	bRunClean : BOOL;		
 	bClearError : BOOL;	
 	bError : BOOL;	
@@ -144,11 +145,5 @@ END_IF
 END_CASE
 ]]></ST>
     </Implementation>
-    <LineIds Name="FB_RCC_SM">
-      <LineId Id="647" Count="45" />
-      <LineId Id="791" Count="0" />
-      <LineId Id="693" Count="60" />
-      <LineId Id="37" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
