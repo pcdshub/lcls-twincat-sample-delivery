@@ -7,15 +7,15 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
- 
-	{attribute 'pytmc' := 'pv:'}
+
+    {attribute 'pytmc' := 'pv:'}
     astSelFM	: ST_SensirionFM;
-	
-	{attribute 'pytmc' := 'pv: Label'}
-	sLabel : STRING;
-	
+
+    {attribute 'pytmc' := 'pv: Label'}
+    sLabel : STRING;
+
     afbSensirionDriver	: FB_SensirionDriver;
-    
+
     fbSensSerial : FB_SerialCommWrapper;
     stSensSerial : ST_SerialComm; // Holds Data
 
