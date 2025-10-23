@@ -3,34 +3,34 @@
   <POU Name="FB_RCC_SM" Id="{47a0acf2-060b-4e55-9edc-089d8f8e62bc}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_RCC_SM
 VAR_IN_OUT
-	stRCC_VRC_01 : ST_VRC;
-	stRCC_VRC_02 : ST_VRC;
-	stRCC_VRC_03 : ST_VRC;
-	stRCC_VRC_04 : ST_VRC;
-	stRCC_GCP_01 : ST_VG;
-		
-	T1 : TIME;	
-	T2 : TIME;	
-	T3 : TIME;	
-	T4 : TIME;	
-	bRunClean : BOOL;		
-	bClearError : BOOL;	
-	bError : BOOL;	
-	bStop : BOOL;	
-	bStartCycle : BOOL;	
-	
+    stRCC_VRC_01 : ST_VRC;
+    stRCC_VRC_02 : ST_VRC;
+    stRCC_VRC_03 : ST_VRC;
+    stRCC_VRC_04 : ST_VRC;
+    stRCC_GCP_01 : ST_VG;
+
+    T1 : TIME;
+    T2 : TIME;
+    T3 : TIME;
+    T4 : TIME;
+    bRunClean : BOOL;
+    bClearError : BOOL;
+    bError : BOOL;
+    bStop : BOOL;
+    bStartCycle : BOOL;
+
     RCC_GCP_01_INTERLOCK_SETPOINT : REAL;
-	xSystemOverrideMode_RCC : BOOL;
-	eCurrentState : INT;
-	sLogMessage : T_MaxString;
-	
-	RCC_VRC_01_OPEN_OK : BOOL;
+    xSystemOverrideMode_RCC : BOOL;
+    eCurrentState : INT;
+    sLogMessage : T_MaxString;
+
+    RCC_VRC_01_OPEN_OK : BOOL;
     RCC_VRC_02_OPEN_OK : BOOL;
     RCC_VRC_03_OPEN_OK : BOOL;
     RCC_VRC_04_OPEN_OK : BOOL;
 END_VAR
-VAR	
-	tTimer1 : TON;
+VAR
+    tTimer1 : TON;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -51,104 +51,98 @@ RCC_VRC_03_OPEN_OK := (stRCC_GCP_01.rPRESS < RCC_GCP_01_INTERLOCK_SETPOINT AND s
 (* Valve can open only when CRIX-RCC-VRC-02 and 03 are closed*)
 RCC_VRC_04_OPEN_OK := ( stRCC_VRC_02.i_xClsLS AND NOT stRCC_VRC_02.q_xOPN_DO ) AND
                                       ( stRCC_VRC_03.i_xClsLS AND NOT stRCC_VRC_03.q_xOPN_DO ) ;
-	
-IF bStop THEN 
-	eCurrentState:= E_RCC_STATES.INIT; 
-END_IF
-		
- CASE eCurrentState OF
-	E_RCC_STATES.ERROR: // SOMETHING WENT WRONG
-		stRCC_VRC_01.q_xOPN_DO := FALSE;
-		stRCC_VRC_02.q_xOPN_DO := FALSE;
-		stRCC_VRC_03.q_xOPN_DO := FALSE;
-		stRCC_VRC_04.q_xOPN_DO := FALSE; 
-		
-		IF bClearError THEN 
-			eCurrentState := E_RCC_STATES.IDLE; 
-			bError := FALSE;
-			bClearError:= FALSE;
-		END_IF
 
-	E_RCC_STATES.IDLE: // -1
-		IF bStartCycle THEN 
-			eCurrentState := E_RCC_STATES.INIT; 
-			bStartCycle := FALSE;
-		END_IF
-		
-	E_RCC_STATES.INIT: // 0
-		stRCC_VRC_01.q_xOPN_DO := FALSE;
-		stRCC_VRC_02.q_xOPN_DO := FALSE;
-		stRCC_VRC_03.q_xOPN_DO := FALSE;
-		stRCC_VRC_04.q_xOPN_DO := FALSE;
-		
-		eCurrentState:= E_RCC_STATES.OPEN_VRC_02_FOR_T1;
-		
-		IF bStop THEN 
-			eCurrentState:= E_RCC_STATES.IDLE; 
-			bStop := FALSE;
-		END_IF
-		
-	E_RCC_STATES.OPEN_VRC_02_FOR_T1: // OPEN 1
-		tTimer1(IN:=TRUE, PT:=T1);
-		stRCC_VRC_02.q_xOPN_DO := TRUE;
-	
-		IF tTimer1.Q THEN 
-			eCurrentState := E_RCC_STATES.DRAIN;
-			tTimer1(IN:=FALSE); // RESTART TIMER
-		END_IF
-		
-	 E_RCC_STATES.DRAIN:	// DRAIN_1 2
-		// THIS MIGHT CAUSE THE RCC TO STALL IF THIS CONDITION IS NEVER MET
-		
-		IF (NOT stRCC_GCP_01.xPRESS_OK) THEN 
-			eCurrentState := E_RCC_STATES.ERROR; 
-			bError := TRUE;
-		END_IF
-		
-		IF RCC_VRC_03_OPEN_OK THEN
-			IF bRunClean THEN stRCC_VRC_02.q_xOPN_DO := FALSE; END_IF
-			stRCC_VRC_03.q_xOPN_DO := TRUE;
-			eCurrentState := E_RCC_STATES.DRAIN_CHECK; 
-		END_IF
-		
-	E_RCC_STATES.DRAIN_CHECK:	// CHECK IF WE ARE DON DRAINING 3
-		tTimer1(IN:=TRUE, PT:=T2);
-		
-		IF tTimer1.Q THEN 
-			eCurrentState := E_RCC_STATES.OPEN_VRC_01_FOR_T3;
-			IF NOT RCC_VRC_03_OPEN_OK THEN eCurrentState := E_RCC_STATES.OPEN_VRC_02_FOR_T1; END_IF
- 			stRCC_VRC_03.q_xOPN_DO := FALSE;
-			IF NOT bRunClean THEN stRCC_VRC_02.q_xOPN_DO := FALSE; END_IF
-			tTimer1(IN:=FALSE); // RESTART TIMER
-		END_IF
-		
-	 E_RCC_STATES.OPEN_VRC_01_FOR_T3: // OPEN VRC_01 for T3 4
-		tTimer1(IN:=TRUE, PT:=T3);
-		stRCC_VRC_01.q_xOPN_DO := TRUE;
-		IF tTimer1.Q THEN 
-			eCurrentState := E_RCC_STATES.OPEN_VRC_04_FOR_T4;
-			tTimer1(IN:=FALSE); // RESTART TIMER
-		END_IF
-		
-	 E_RCC_STATES.OPEN_VRC_04_FOR_T4: // OPEN VRC_04 for T4 5
-		tTimer1(IN:=TRUE, PT:=T4);
-		stRCC_VRC_04.q_xOPN_DO := TRUE;
-		IF tTimer1.Q THEN 
-			eCurrentState := E_RCC_STATES.IDLE;
-			stRCC_VRC_01.q_xOPN_DO := FALSE;
-			stRCC_VRC_04.q_xOPN_DO := FALSE;
-			tTimer1(IN:=FALSE); // RESTART TIMER
-		END_IF	
-	
-	
+IF bStop THEN
+    eCurrentState:= E_RCC_STATES.INIT;
+END_IF
+
+ CASE eCurrentState OF
+    E_RCC_STATES.ERROR: // SOMETHING WENT WRONG
+        stRCC_VRC_01.q_xOPN_DO := FALSE;
+        stRCC_VRC_02.q_xOPN_DO := FALSE;
+        stRCC_VRC_03.q_xOPN_DO := FALSE;
+        stRCC_VRC_04.q_xOPN_DO := FALSE;
+
+        IF bClearError THEN
+            eCurrentState := E_RCC_STATES.IDLE;
+            bError := FALSE;
+            bClearError:= FALSE;
+        END_IF
+
+    E_RCC_STATES.IDLE: // -1
+        IF bStartCycle THEN
+            eCurrentState := E_RCC_STATES.INIT;
+            bStartCycle := FALSE;
+        END_IF
+
+    E_RCC_STATES.INIT: // 0
+        stRCC_VRC_01.q_xOPN_DO := FALSE;
+        stRCC_VRC_02.q_xOPN_DO := FALSE;
+        stRCC_VRC_03.q_xOPN_DO := FALSE;
+        stRCC_VRC_04.q_xOPN_DO := FALSE;
+
+        eCurrentState:= E_RCC_STATES.OPEN_VRC_02_FOR_T1;
+
+        IF bStop THEN
+            eCurrentState:= E_RCC_STATES.IDLE;
+            bStop := FALSE;
+        END_IF
+
+    E_RCC_STATES.OPEN_VRC_02_FOR_T1: // OPEN 1
+        tTimer1(IN:=TRUE, PT:=T1);
+        stRCC_VRC_02.q_xOPN_DO := TRUE;
+
+        IF tTimer1.Q THEN
+            eCurrentState := E_RCC_STATES.DRAIN;
+            tTimer1(IN:=FALSE); // RESTART TIMER
+        END_IF
+
+     E_RCC_STATES.DRAIN:	// DRAIN_1 2
+        // THIS MIGHT CAUSE THE RCC TO STALL IF THIS CONDITION IS NEVER MET
+
+        IF (NOT stRCC_GCP_01.xPRESS_OK) THEN
+            eCurrentState := E_RCC_STATES.ERROR;
+            bError := TRUE;
+        END_IF
+
+        IF RCC_VRC_03_OPEN_OK THEN
+            IF bRunClean THEN stRCC_VRC_02.q_xOPN_DO := FALSE; END_IF
+            stRCC_VRC_03.q_xOPN_DO := TRUE;
+            eCurrentState := E_RCC_STATES.DRAIN_CHECK;
+        END_IF
+
+    E_RCC_STATES.DRAIN_CHECK:	// CHECK IF WE ARE DON DRAINING 3
+        tTimer1(IN:=TRUE, PT:=T2);
+
+        IF tTimer1.Q THEN
+            eCurrentState := E_RCC_STATES.OPEN_VRC_01_FOR_T3;
+            IF NOT RCC_VRC_03_OPEN_OK THEN eCurrentState := E_RCC_STATES.OPEN_VRC_02_FOR_T1; END_IF
+             stRCC_VRC_03.q_xOPN_DO := FALSE;
+            IF NOT bRunClean THEN stRCC_VRC_02.q_xOPN_DO := FALSE; END_IF
+            tTimer1(IN:=FALSE); // RESTART TIMER
+        END_IF
+
+     E_RCC_STATES.OPEN_VRC_01_FOR_T3: // OPEN VRC_01 for T3 4
+        tTimer1(IN:=TRUE, PT:=T3);
+        stRCC_VRC_01.q_xOPN_DO := TRUE;
+        IF tTimer1.Q THEN
+            eCurrentState := E_RCC_STATES.OPEN_VRC_04_FOR_T4;
+            tTimer1(IN:=FALSE); // RESTART TIMER
+        END_IF
+
+     E_RCC_STATES.OPEN_VRC_04_FOR_T4: // OPEN VRC_04 for T4 5
+        tTimer1(IN:=TRUE, PT:=T4);
+        stRCC_VRC_04.q_xOPN_DO := TRUE;
+        IF tTimer1.Q THEN
+            eCurrentState := E_RCC_STATES.IDLE;
+            stRCC_VRC_01.q_xOPN_DO := FALSE;
+            stRCC_VRC_04.q_xOPN_DO := FALSE;
+            tTimer1(IN:=FALSE); // RESTART TIMER
+        END_IF
+
+
 END_CASE
 ]]></ST>
     </Implementation>
-    <LineIds Name="FB_RCC_SM">
-      <LineId Id="647" Count="45" />
-      <LineId Id="791" Count="0" />
-      <LineId Id="693" Count="60" />
-      <LineId Id="37" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

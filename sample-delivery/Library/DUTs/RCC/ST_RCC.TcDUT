@@ -3,69 +3,69 @@
   <DUT Name="ST_RCC" Id="{1b353780-7d91-4e7e-9358-dff7c26eabba}">
     <Declaration><![CDATA[TYPE ST_RCC :
 STRUCT
-	{attribute 'pytmc' :=' 
-		pv: Tinterval 
-		io: io
-	'} // Time before cycle starts
-	TInterval : REAL := 10;
-	{attribute 'pytmc' :=' 
-		pv: T1
-		io: io 
-	'}
-	T1 : REAL := 20;
-	{attribute 'pytmc' :=' 
-		pv: T2 
-		io: io
-	'}
-	T2 : REAL := 10;
-	{attribute 'pytmc' :='
-		pv: T3 
-		io: io
-	'}
-	T3 : REAL := 5;
-	{attribute 'pytmc' :=' 
-		pv: T4 
-		io: io
-	'}
-	T4 : REAL := 10;
-	{attribute 'pytmc' :=' pv: RUNCLEAN'}
-	bRunClean : BOOL := TRUE;
-	
-	{attribute 'pytmc' :=' pv: CLEAR_ERROR'}
-	bClearError : BOOL := FALSE;
-	{attribute 'pytmc' :=' pv: ERROR'}
-	bError : BOOL := FALSE;
-	{attribute 'pytmc' :=' pv: STOP_CYCLE'}
-	bStop : BOOL := FALSE;
-	
-	{attribute 'pytmc' :=' pv: START_CYCLE'}
-	bStartCycle : BOOL  := FALSE;
-	
-	{attribute 'pytmc' :=' pv: ILK_Setpoint '}
+    {attribute 'pytmc' :='
+        pv: Tinterval
+        io: io
+    '} // Time before cycle starts
+    TInterval : REAL := 10;
+    {attribute 'pytmc' :='
+        pv: T1
+        io: io
+    '}
+    T1 : REAL := 20;
+    {attribute 'pytmc' :='
+        pv: T2
+        io: io
+    '}
+    T2 : REAL := 10;
+    {attribute 'pytmc' :='
+        pv: T3
+        io: io
+    '}
+    T3 : REAL := 5;
+    {attribute 'pytmc' :='
+        pv: T4
+        io: io
+    '}
+    T4 : REAL := 10;
+    {attribute 'pytmc' :=' pv: RUNCLEAN'}
+    bRunClean : BOOL := TRUE;
+
+    {attribute 'pytmc' :=' pv: CLEAR_ERROR'}
+    bClearError : BOOL := FALSE;
+    {attribute 'pytmc' :=' pv: ERROR'}
+    bError : BOOL := FALSE;
+    {attribute 'pytmc' :=' pv: STOP_CYCLE'}
+    bStop : BOOL := FALSE;
+
+    {attribute 'pytmc' :=' pv: START_CYCLE'}
+    bStartCycle : BOOL  := FALSE;
+
+    {attribute 'pytmc' :=' pv: ILK_Setpoint '}
     RCC_GCP_01_INTERLOCK_SETPOINT : REAL := 10;
-	{attribute 'pytmc' :=' pv: OverrideMode '}
-	xSystemOverrideMode_RCC : BOOL := FALSE;
-	
-	eCurrentState : INT := E_RCC_STATES.IDLE;
-	
-	{attribute 'pytmc' :=' 
-		pv: RCC_RUNNING 
-		io: o
-	'}
-	bRunning : BOOL := FALSE;
-	{attribute 'pytmc' :=' 
-		pv: RCC_TIMER 
-		io: o
-	'}
-	tTimerReadBack : STRING := '';
-	{attribute 'pytmc' :=' pv: sLogMessage '}
-	sLogMessage : T_MaxString := '';
-	
-	RCC_VRC_01_OPEN_OK : BOOL;
+    {attribute 'pytmc' :=' pv: OverrideMode '}
+    xSystemOverrideMode_RCC : BOOL := FALSE;
+
+    eCurrentState : INT := E_RCC_STATES.IDLE;
+
+    {attribute 'pytmc' :='
+        pv: RCC_RUNNING
+        io: o
+    '}
+    bRunning : BOOL := FALSE;
+    {attribute 'pytmc' :='
+        pv: RCC_TIMER
+        io: o
+    '}
+    tTimerReadBack : STRING := '';
+    {attribute 'pytmc' :=' pv: sLogMessage '}
+    sLogMessage : T_MaxString := '';
+
+    RCC_VRC_01_OPEN_OK : BOOL;
     RCC_VRC_02_OPEN_OK : BOOL;
     RCC_VRC_03_OPEN_OK : BOOL;
     RCC_VRC_04_OPEN_OK : BOOL;
-	
+
 END_STRUCT
 END_TYPE
 ]]></Declaration>

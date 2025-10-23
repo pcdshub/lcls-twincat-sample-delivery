@@ -12,15 +12,15 @@ VAR
     {attribute 'pytmc' := '
         pv: Valve:01:Open
         io: io
-		field: ZNAM "CLOSE"
-		field: ONAM "OPEN"
+        field: ZNAM "CLOSE"
+        field: ONAM "OPEN"
      '}
     q_xDO1 AT %Q*	:	BOOL;
     {attribute 'pytmc' := '
         pv: Valve:02:Open
         io: io
-		field: ZNAM "CLOSE"
-		field: ONAM "OPEN"
+        field: ZNAM "CLOSE"
+        field: ONAM "OPEN"
      '}
     q_xDO2 AT %Q*	:	BOOL;
 

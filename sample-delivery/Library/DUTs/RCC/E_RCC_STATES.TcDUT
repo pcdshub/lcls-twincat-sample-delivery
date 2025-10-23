@@ -5,14 +5,14 @@
 {attribute 'strict'}
 TYPE E_RCC_STATES :
 (
-	ERROR := -1,
-	IDLE := 0,
-	INIT := 1,
-	OPEN_VRC_02_FOR_T1 := 2,
-	DRAIN := 3,
-	DRAIN_CHECK := 4,
-	OPEN_VRC_01_FOR_T3 := 5,
-	OPEN_VRC_04_FOR_T4 := 6
+    ERROR := -1,
+    IDLE := 0,
+    INIT := 1,
+    OPEN_VRC_02_FOR_T1 := 2,
+    DRAIN := 3,
+    DRAIN_CHECK := 4,
+    OPEN_VRC_01_FOR_T3 := 5,
+    OPEN_VRC_04_FOR_T4 := 6
 );
 END_TYPE
 ]]></Declaration>
