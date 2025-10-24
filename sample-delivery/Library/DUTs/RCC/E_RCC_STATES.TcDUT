@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="E_RCC_STATES" Id="{79392382-29ed-4a4b-845c-3979aeae9678}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_RCC_STATES :
+(
+    ERROR := -1,
+    IDLE := 0,
+    INIT := 1,
+    OPEN_VRC_02_FOR_T1 := 2,
+    DRAIN := 3,
+    DRAIN_CHECK := 4,
+    OPEN_VRC_01_FOR_T3 := 5,
+    OPEN_VRC_04_FOR_T4 := 6
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

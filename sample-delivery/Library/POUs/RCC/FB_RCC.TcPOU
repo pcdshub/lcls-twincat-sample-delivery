@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_RCC" Id="{7003c15e-7f35-4bdc-b753-d97dc650dfad}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_RCC
+VAR_IN_OUT
+    stRCC_VRC_01 : ST_VRC;
+    stRCC_VRC_02 : ST_VRC;
+    stRCC_VRC_03 : ST_VRC;
+    stRCC_VRC_04 : ST_VRC;
+    stRCC_GCP_01 : ST_VG;
+    stRCC_CTL : ST_RCC;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+    fbRCC : FB_RCC_SM; // RCC STATE MATCHINE
+    fbFormatString : FB_FormatString;
+    TInterval : TIME;
+    T1 : TIME;
+    T2 : TIME;
+    T3 : TIME;
+    T4 : TIME;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// convert int to time to seconds
+TInterval := REAL_TO_TIME(stRCC_CTL.TInterval * 1E3);
+T1 := REAL_TO_TIME(stRCC_CTL.T1 * 1E3);
+T2 := REAL_TO_TIME(stRCC_CTL.T2 * 1E3);
+T3 := REAL_TO_TIME(stRCC_CTL.T3 * 1E3);
+T4 := REAL_TO_TIME(stRCC_CTL.T4 * 1E3);
+
+fbRCC(
+    stRCC_VRC_01 := stRCC_VRC_01,
+    stRCC_VRC_02 := stRCC_VRC_02,
+    stRCC_VRC_03 := stRCC_VRC_03,
+    stRCC_VRC_04 := stRCC_VRC_04,
+    stRCC_GCP_01 := stRCC_GCP_01,
+    TInterval := TInterval,
+    T1 := T1,
+    T2 := T2,
+    T3 := T3,
+    T4 := T4,
+    bRunClean := stRCC_CTL.bRunClean,
+    bClearError := stRCC_CTL.bClearError,
+    bError := stRCC_CTL.bError,
+    bStop := stRCC_CTL.bStop,
+    bStartCycle := stRCC_CTL.bStartCycle,
+    tTimerRBV := stRCC_CTL.tTimerReadBack,
+    bRunning := stRCC_CTL.bRunning,
+    RCC_GCP_01_INTERLOCK_SETPOINT := stRCC_CTL.RCC_GCP_01_INTERLOCK_SETPOINT,
+    xSystemOverrideMode_RCC := stRCC_CTL.xSystemOverrideMode_RCC,
+    eCurrentState := stRCC_CTL.eCurrentState,
+    sLogMessage := stRCC_CTL.sLogMessage,
+    RCC_VRC_01_OPEN_OK := stRCC_CTL.RCC_VRC_01_OPEN_OK,
+    RCC_VRC_02_OPEN_OK := stRCC_CTL.RCC_VRC_02_OPEN_OK,
+    RCC_VRC_03_OPEN_OK := stRCC_CTL.RCC_VRC_03_OPEN_OK,
+    RCC_VRC_04_OPEN_OK := stRCC_CTL.RCC_VRC_04_OPEN_OK
+    );
+
+    ]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
