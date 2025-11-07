@@ -34,11 +34,11 @@ VAR
     tTimeOutDuration: TIME:= T#30S;
     tOPNtimeout: TON;
     tCLStimeout:TON;
-	i_xClsLS : BOOL;
+    i_xClsLS : BOOL;
 
 
     (*IO*)
-	i_xOpnLS	AT%I*: BOOL;
+    i_xOpnLS	AT%I*: BOOL;
     q_xOPN_DO	AT%Q*: BOOL;
 
 END_VAR]]></Declaration>
