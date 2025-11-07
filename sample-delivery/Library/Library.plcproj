@@ -16,7 +16,7 @@
     <Implicit_Jitter_Distribution>{ee4a008e-3fc6-4185-92b5-c3a57c0f2c5e}</Implicit_Jitter_Distribution>
     <LibraryReferences>{6f5799fa-7bce-4f89-8794-1ee6574da6eb}</LibraryReferences>
     <Company>SLAC - LCLS</Company>
-    <Released>false</Released>
+    <Released>true</Released>
     <Title>LCLS Sample Delivery</Title>
     <ProjectVersion>0.0.0</ProjectVersion>
   </PropertyGroup>
@@ -215,6 +215,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\RCC\FB_RCC_SM.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\RCC\FB_VRC_NC_OPNLS.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Regulators\FB_ProportionairRegulator.TcPOU">
