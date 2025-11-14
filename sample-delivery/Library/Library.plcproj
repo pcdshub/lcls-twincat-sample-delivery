@@ -232,6 +232,9 @@
     <Compile Include="POUs\Selectors\FB_SelectorM3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Sensirion\FB_SenserionFlowMeter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Sensirion\FB_SensirionDriver.TcPOU">
       <SubType>Code</SubType>
     </Compile>

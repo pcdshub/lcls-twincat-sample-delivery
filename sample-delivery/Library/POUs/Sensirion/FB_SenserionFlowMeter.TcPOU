@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_SenserionFlowMeter" Id="{5e050614-d229-4944-97d7-f790c799ae6b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SenserionFlowMeter
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+
+    {attribute 'pytmc' := 'pv:'}
+    astSelFM	: ST_SensirionFM;
+
+    {attribute 'pytmc' := 'pv: Label'}
+    sLabel : STRING;
+
+    afbSensirionDriver	: FB_SensirionDriver;
+
+    fbSensSerial : FB_SerialCommWrapper;
+    stSensSerial : ST_SerialComm; // Holds Data
+
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+astSelFM.stCtrl.xReset := astSelFM.xFMReset;
+astSelFM.stCtrl.xCalMode := astSelFM.xFMModeReq;
+astSelFM.stCtrl.bAdr := 0;
+
+afbSensirionDriver(
+    i_xExecute:= TRUE,
+    i_tTimeOut:= t#1s,
+    iq_stSerialRXBuffer:= stSensSerial.RxBuffer,
+    iq_stSerialTXBuffer:= stSensSerial.TxBuffer,
+    q_stStatus=>astSelFM.stStat,
+    i_stControl:=astSelFM.stCtrl);
+
+IF afbSensirionDriver.q_xDone OR
+    afbSensirionDriver.q_xError OR
+    afbSensirionDriver.q_xTimeout THEN
+
+    astSelFM.rFlow := astSelFM.stStat.rFlow;
+    astSelFM.xFMOoR := astSelFM.stStat.xOoR;
+    astSelFM.xFlowValid := astSelFM.stStat.xFlowValid;
+    astSelFM.eFMState := astSelFM.stStat.iState;
+    astSelFM.xFMModeRb := astSelFM.stStat.xFMMode;
+
+    (* reset function for next time *)
+    afbSensirionDriver.Reset();
+
+END_IF
+
+fbSensSerial(stSerialComm := stSensSerial);
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
