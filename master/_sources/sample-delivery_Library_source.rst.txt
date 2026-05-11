@@ -107,6 +107,25 @@ E_PropValveFBState
 
 
 
+E_RCC_PUMP_SM_STATES
+^^^^^^^^^^^^^^^^^^^^
+
+::
+
+    {attribute 'qualified_only'}
+    {attribute 'strict'}
+    TYPE E_RCC_PUMP_SM_STATES :
+    (
+        IDLE := 0,
+        PRESSURE := 1,
+        VACUUM := 2,
+        VENT := 3
+    );
+    END_TYPE
+
+
+
+
 E_RCC_STATES
 ^^^^^^^^^^^^
 
@@ -1724,6 +1743,70 @@ Related:
     * `ST_ManifoldValve`_
 
 
+FB_MPV1
+^^^^^^^
+
+::
+
+    FUNCTION_BLOCK FB_MPV1
+    (* Pressure Control Module 0-10v control and readback signal *)
+    VAR_INPUT
+    END_VAR
+    VAR_OUTPUT
+    END_VAR
+    VAR
+        {attribute 'pytmc' := '
+            pv: PropAir:01
+         '}
+        stPropAir1 : ST_Proportionair;
+        {attribute 'pytmc' := '
+            pv: PropAir:02
+         '}
+        stPropAir2 : ST_Proportionair;
+
+        PropAir1 : FB_PCM_AIO;
+        PropAir2 : FB_PCM_AIO;
+    END_VAR
+    PropAir1(iq_stRegProp:=stPropAir1, iDEVICE_MAX_PRESSURE := 100);
+    PropAir1(iq_stRegProp:=stPropAir1, iDEVICE_MAX_PRESSURE := 100);
+
+    END_FUNCTION_BLOCK
+
+
+Related:
+    * `FB_PCM_AIO`_
+    * `ST_Proportionair`_
+
+
+FB_PCM_AIO
+^^^^^^^^^^
+
+::
+
+    FUNCTION_BLOCK FB_PCM_AIO
+    (* FUNCTION BLOCK FOR PRESSURE CONTROL MODULES WIT ANALOG IO CONTROL WITH 0-10v SIGNAL *)
+    VAR_INPUT
+        iDEVICE_MAX_PRESSURE : INT := 100; // (psi)
+    END_VAR
+    VAR_OUTPUT
+    END_VAR
+    VAR
+        iTermBits :INT := 32767;
+    END_VAR
+    VAR_IN_OUT
+        iq_stRegProp	:	ST_Proportionair;
+    END_VAR
+    iq_stRegProp.iPressure := REAL_TO_INT(iDEVICE_MAX_PRESSURE * (MAX(0,INT_TO_REAL(iq_stRegProp.i_iPressRB)) / iTermBits));
+    iq_stRegProp.iSetpoint := LIMIT(iq_stRegProp.iLoLimit, iq_stRegProp.iSetpoint, iq_stRegProp.iHiLimit);
+    iq_stRegProp.q_iPressCt := REAL_TO_INT( (INT_TO_REAL(iq_stRegProp.iSetpoint)/iDEVICE_MAX_PRESSURE)*iTermBits);
+
+    END_FUNCTION_BLOCK
+
+
+Related:
+    * `ST_Proportionair`_
+
+
 FB_PID_EXT
 ^^^^^^^^^^
 
@@ -2128,6 +2211,96 @@ FB_RCC
 Related:
     * `FB_RCC_SM`_
     * `ST_RCC`_
+
+
+FB_RCC_PUMP
+^^^^^^^^^^^
+
+::
+
+    (*This is a funcitonal prototype for in AIR RCC PUMP / L.V. RCC / WIP NAME*)
+    FUNCTION_BLOCK FB_RCC_PUMP
+    VAR_IN_OUT
+        stRCC_VRC_01 : ST_VRC;
+        stRCC_VRC_02 : ST_VRC;
+        stRCC_VRC_03 : ST_VRC;
+
+        T1 : TIME;
+        T2 : TIME;
+        T3 : TIME;
+
+        bStart 	: BOOL := FALSE;
+        bStop	: BOOL := FALSE;
+
+    END_VAR
+    VAR_OUTPUT
+    END_VAR
+    VAR
+        iState 	: INT := E_RCC_PUMP_SM_STATES.IDLE;
+        tTimer1 : TON;
+        tTime : TIME := T#0s;
+    END_VAR
+    tTimer1(IN:=TRUE, PT:= tTime);
+
+    IF bStop THEN
+        bStop := FALSE;
+        stRCC_VRC_01.pv_xOPN_SW := FALSE;
+        stRCC_VRC_02.pv_xOPN_SW := FALSE;
+        stRCC_VRC_03.pv_xOPN_SW := FALSE;
+        iState := E_RCC_PUMP_SM_STATES.IDLE;
+    END_IF
+
+    CASE iState OF
+        E_RCC_PUMP_SM_STATES.IDLE: // IDlE
+
+        IF bStart THEN
+            iState := E_RCC_PUMP_SM_STATES.PRESSURE;
+            bStart := FALSE;
+            tTime := T1;
+            tTimer1(IN:=FALSE); // RESTART TIMER
+        END_IF
+
+        E_RCC_PUMP_SM_STATES.PRESSURE: // PRESSURE
+
+        stRCC_VRC_01.pv_xOPN_SW := FALSE;
+        stRCC_VRC_02.pv_xOPN_SW := FALSE;
+        stRCC_VRC_03.pv_xOPN_SW := TRUE;
+
+        IF tTimer1.Q THEN
+            iState := E_RCC_PUMP_SM_STATES.VACUUM;
+            tTime := T2;
+            tTimer1(IN:=FALSE); // RESTART TIMER
+        END_IF
+
+        E_RCC_PUMP_SM_STATES.VACUUM: // VACUUM
+
+        stRCC_VRC_01.pv_xOPN_SW := FALSE;
+        stRCC_VRC_02.pv_xOPN_SW := TRUE;
+        stRCC_VRC_03.pv_xOPN_SW := FALSE;
+
+        IF tTimer1.Q THEN
+            iState := E_RCC_PUMP_SM_STATES.VENT;
+            tTime := T3;
+            tTimer1(IN:=FALSE); // RESTART TIMER
+        END_IF
+
+        E_RCC_PUMP_SM_STATES.VENT: // VENT;
+
+        stRCC_VRC_01.pv_xOPN_SW := TRUE;
+        stRCC_VRC_02.pv_xOPN_SW := FALSE;
+        stRCC_VRC_03.pv_xOPN_SW := FALSE;
+
+        IF tTimer1.Q THEN
+            iState := E_RCC_PUMP_SM_STATES.VENT;
+        END_IF
+
+    END_CASE
+
+    END_FUNCTION_BLOCK
+
+
+Related:
+    * `E_RCC_PUMP_SM_STATES`_
 
 
 FB_RCC_SM

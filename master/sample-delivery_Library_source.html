@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DUTs &mdash; pcdshub/lcls-twincat-sample-delivery  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/tree.css?v=837a00b9" />
       <link rel="stylesheet" type="text/css" href="_static/width.css?v=ab210c7a" />
 
@@ -16,8 +16,8 @@
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/docs-versions-menu.js?v=3d6a1aea"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -67,6 +67,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#e-ctrl-mode">E_CTRL_MODE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#e-ctrl-mode-1">E_CTRL_MODE_1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#e-propvalvefbstate">E_PropValveFBState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#e-rcc-pump-sm-states">E_RCC_PUMP_SM_STATES</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#e-rcc-states">E_RCC_STATES</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hmi-propvalvectrlstate">HMI_PropValveCtrlState</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#st-4pvicivalvesamplenames">ST_4PViciValveSampleNames</a></li>
@@ -112,11 +113,14 @@
 <li class="toctree-l2"><a class="reference internal" href="#fb-gasmanifold">FB_GasManifold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fb-manipaxis">FB_ManipAxis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fb-manivalve">FB_ManiValve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fb-mpv1">FB_MPV1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fb-pcm-aio">FB_PCM_AIO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fb-pid-ext">FB_PID_EXT</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fb-pressurecontrolmodule">FB_PressureControlModule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fb-proportionairregulator">FB_ProportionairRegulator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fb-propvalve">FB_PropValve</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fb-rcc">FB_RCC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fb-rcc-pump">FB_RCC_PUMP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fb-rcc-sm">FB_RCC_SM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fb-rcc-test">FB_RCC_TEST</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fb-regulator">FB_Regulator</a></li>
@@ -245,6 +249,21 @@
     <span class="n">Manual</span> <span class="o">:=</span> <span class="mi">100</span><span class="p">,</span>
     <span class="n">Pressure</span> <span class="o">:=</span> <span class="mi">200</span><span class="p">,</span>
     <span class="n">Error</span> <span class="o">:=</span> <span class="mi">9000</span>
+<span class="p">);</span>
+<span class="n">END_TYPE</span>
+</pre></div>
+</div>
+</section>
+<section id="e-rcc-pump-sm-states">
+<h2>E_RCC_PUMP_SM_STATES<a class="headerlink" href="#e-rcc-pump-sm-states" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">attribute</span> <span class="s1">&#39;qualified_only&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="n">attribute</span> <span class="s1">&#39;strict&#39;</span><span class="p">}</span>
+<span class="n">TYPE</span> <span class="n">E_RCC_PUMP_SM_STATES</span> <span class="p">:</span>
+<span class="p">(</span>
+    <span class="n">IDLE</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">PRESSURE</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">VACUUM</span> <span class="o">:=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">VENT</span> <span class="o">:=</span> <span class="mi">3</span>
 <span class="p">);</span>
 <span class="n">END_TYPE</span>
 </pre></div>
@@ -1781,6 +1800,70 @@
 </dd>
 </dl>
 </section>
+<section id="fb-mpv1">
+<h2>FB_MPV1<a class="headerlink" href="#fb-mpv1" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FUNCTION_BLOCK</span> <span class="n">FB_MPV1</span>
+<span class="p">(</span><span class="o">*</span> <span class="n">Pressure</span> <span class="n">Control</span> <span class="n">Module</span> <span class="mi">0</span><span class="o">-</span><span class="mi">10</span><span class="n">v</span> <span class="n">control</span> <span class="ow">and</span> <span class="n">readback</span> <span class="n">signal</span> <span class="o">*</span><span class="p">)</span>
+<span class="n">VAR_INPUT</span>
+<span class="n">END_VAR</span>
+<span class="n">VAR_OUTPUT</span>
+<span class="n">END_VAR</span>
+<span class="n">VAR</span>
+    <span class="p">{</span><span class="n">attribute</span> <span class="s1">&#39;pytmc&#39;</span> <span class="o">:=</span> <span class="s1">&#39;</span>
+        <span class="n">pv</span><span class="p">:</span> <span class="n">PropAir</span><span class="p">:</span><span class="mi">01</span>
+     <span class="s1">&#39;}</span>
+    <span class="n">stPropAir1</span> <span class="p">:</span> <span class="n">ST_Proportionair</span><span class="p">;</span>
+    <span class="p">{</span><span class="n">attribute</span> <span class="s1">&#39;pytmc&#39;</span> <span class="o">:=</span> <span class="s1">&#39;</span>
+        <span class="n">pv</span><span class="p">:</span> <span class="n">PropAir</span><span class="p">:</span><span class="mi">02</span>
+     <span class="s1">&#39;}</span>
+    <span class="n">stPropAir2</span> <span class="p">:</span> <span class="n">ST_Proportionair</span><span class="p">;</span>
+
+    <span class="n">PropAir1</span> <span class="p">:</span> <span class="n">FB_PCM_AIO</span><span class="p">;</span>
+    <span class="n">PropAir2</span> <span class="p">:</span> <span class="n">FB_PCM_AIO</span><span class="p">;</span>
+<span class="n">END_VAR</span>
+<span class="n">PropAir1</span><span class="p">(</span><span class="n">iq_stRegProp</span><span class="o">:=</span><span class="n">stPropAir1</span><span class="p">,</span> <span class="n">iDEVICE_MAX_PRESSURE</span> <span class="o">:=</span> <span class="mi">100</span><span class="p">);</span>
+<span class="n">PropAir1</span><span class="p">(</span><span class="n">iq_stRegProp</span><span class="o">:=</span><span class="n">stPropAir1</span><span class="p">,</span> <span class="n">iDEVICE_MAX_PRESSURE</span> <span class="o">:=</span> <span class="mi">100</span><span class="p">);</span>
+
+<span class="n">END_FUNCTION_BLOCK</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Related:</dt><dd><ul class="simple">
+<li><p><a class="reference internal" href="#fb-pcm-aio">FB_PCM_AIO</a></p></li>
+<li><p><a class="reference internal" href="#st-proportionair">ST_Proportionair</a></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="fb-pcm-aio">
+<h2>FB_PCM_AIO<a class="headerlink" href="#fb-pcm-aio" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FUNCTION_BLOCK</span> <span class="n">FB_PCM_AIO</span>
+<span class="p">(</span><span class="o">*</span> <span class="n">FUNCTION</span> <span class="n">BLOCK</span> <span class="n">FOR</span> <span class="n">PRESSURE</span> <span class="n">CONTROL</span> <span class="n">MODULES</span> <span class="n">WIT</span> <span class="n">ANALOG</span> <span class="n">IO</span> <span class="n">CONTROL</span> <span class="n">WITH</span> <span class="mi">0</span><span class="o">-</span><span class="mi">10</span><span class="n">v</span> <span class="n">SIGNAL</span> <span class="o">*</span><span class="p">)</span>
+<span class="n">VAR_INPUT</span>
+    <span class="n">iDEVICE_MAX_PRESSURE</span> <span class="p">:</span> <span class="n">INT</span> <span class="o">:=</span> <span class="mi">100</span><span class="p">;</span> <span class="o">//</span> <span class="p">(</span><span class="n">psi</span><span class="p">)</span>
+<span class="n">END_VAR</span>
+<span class="n">VAR_OUTPUT</span>
+<span class="n">END_VAR</span>
+<span class="n">VAR</span>
+    <span class="n">iTermBits</span> <span class="p">:</span><span class="n">INT</span> <span class="o">:=</span> <span class="mi">32767</span><span class="p">;</span>
+<span class="n">END_VAR</span>
+<span class="n">VAR_IN_OUT</span>
+    <span class="n">iq_stRegProp</span>    <span class="p">:</span>       <span class="n">ST_Proportionair</span><span class="p">;</span>
+<span class="n">END_VAR</span>
+<span class="n">iq_stRegProp</span><span class="o">.</span><span class="n">iPressure</span> <span class="o">:=</span> <span class="n">REAL_TO_INT</span><span class="p">(</span><span class="n">iDEVICE_MAX_PRESSURE</span> <span class="o">*</span> <span class="p">(</span><span class="n">MAX</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">INT_TO_REAL</span><span class="p">(</span><span class="n">iq_stRegProp</span><span class="o">.</span><span class="n">i_iPressRB</span><span class="p">))</span> <span class="o">/</span> <span class="n">iTermBits</span><span class="p">));</span>
+<span class="n">iq_stRegProp</span><span class="o">.</span><span class="n">iSetpoint</span> <span class="o">:=</span> <span class="n">LIMIT</span><span class="p">(</span><span class="n">iq_stRegProp</span><span class="o">.</span><span class="n">iLoLimit</span><span class="p">,</span> <span class="n">iq_stRegProp</span><span class="o">.</span><span class="n">iSetpoint</span><span class="p">,</span> <span class="n">iq_stRegProp</span><span class="o">.</span><span class="n">iHiLimit</span><span class="p">);</span>
+<span class="n">iq_stRegProp</span><span class="o">.</span><span class="n">q_iPressCt</span> <span class="o">:=</span> <span class="n">REAL_TO_INT</span><span class="p">(</span> <span class="p">(</span><span class="n">INT_TO_REAL</span><span class="p">(</span><span class="n">iq_stRegProp</span><span class="o">.</span><span class="n">iSetpoint</span><span class="p">)</span><span class="o">/</span><span class="n">iDEVICE_MAX_PRESSURE</span><span class="p">)</span><span class="o">*</span><span class="n">iTermBits</span><span class="p">);</span>
+
+<span class="n">END_FUNCTION_BLOCK</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Related:</dt><dd><ul class="simple">
+<li><p><a class="reference internal" href="#st-proportionair">ST_Proportionair</a></p></li>
+</ul>
+</dd>
+</dl>
+</section>
 <section id="fb-pid-ext">
 <h2>FB_PID_EXT<a class="headerlink" href="#fb-pid-ext" title="Link to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FUNCTION_BLOCK</span> <span class="n">FB_PID_EXT</span>
@@ -2183,6 +2266,96 @@
 <dt>Related:</dt><dd><ul class="simple">
 <li><p><a class="reference internal" href="#fb-rcc-sm">FB_RCC_SM</a></p></li>
 <li><p><a class="reference internal" href="#st-rcc">ST_RCC</a></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="fb-rcc-pump">
+<h2>FB_RCC_PUMP<a class="headerlink" href="#fb-rcc-pump" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">*</span><span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">funcitonal</span> <span class="n">prototype</span> <span class="k">for</span> <span class="ow">in</span> <span class="n">AIR</span> <span class="n">RCC</span> <span class="n">PUMP</span> <span class="o">/</span> <span class="n">L</span><span class="o">.</span><span class="n">V</span><span class="o">.</span> <span class="n">RCC</span> <span class="o">/</span> <span class="n">WIP</span> <span class="n">NAME</span><span class="o">*</span><span class="p">)</span>
+<span class="n">FUNCTION_BLOCK</span> <span class="n">FB_RCC_PUMP</span>
+<span class="n">VAR_IN_OUT</span>
+    <span class="n">stRCC_VRC_01</span> <span class="p">:</span> <span class="n">ST_VRC</span><span class="p">;</span>
+    <span class="n">stRCC_VRC_02</span> <span class="p">:</span> <span class="n">ST_VRC</span><span class="p">;</span>
+    <span class="n">stRCC_VRC_03</span> <span class="p">:</span> <span class="n">ST_VRC</span><span class="p">;</span>
+
+    <span class="n">T1</span> <span class="p">:</span> <span class="n">TIME</span><span class="p">;</span>
+    <span class="n">T2</span> <span class="p">:</span> <span class="n">TIME</span><span class="p">;</span>
+    <span class="n">T3</span> <span class="p">:</span> <span class="n">TIME</span><span class="p">;</span>
+
+    <span class="n">bStart</span>  <span class="p">:</span> <span class="n">BOOL</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+    <span class="n">bStop</span>   <span class="p">:</span> <span class="n">BOOL</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+
+<span class="n">END_VAR</span>
+<span class="n">VAR_OUTPUT</span>
+<span class="n">END_VAR</span>
+<span class="n">VAR</span>
+    <span class="n">iState</span>  <span class="p">:</span> <span class="n">INT</span> <span class="o">:=</span> <span class="n">E_RCC_PUMP_SM_STATES</span><span class="o">.</span><span class="n">IDLE</span><span class="p">;</span>
+    <span class="n">tTimer1</span> <span class="p">:</span> <span class="n">TON</span><span class="p">;</span>
+    <span class="n">tTime</span> <span class="p">:</span> <span class="n">TIME</span> <span class="o">:=</span> <span class="n">T</span><span class="c1">#0s;</span>
+<span class="n">END_VAR</span>
+<span class="n">tTimer1</span><span class="p">(</span><span class="n">IN</span><span class="o">:=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">PT</span><span class="o">:=</span> <span class="n">tTime</span><span class="p">);</span>
+
+<span class="n">IF</span> <span class="n">bStop</span> <span class="n">THEN</span>
+    <span class="n">bStop</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+    <span class="n">stRCC_VRC_01</span><span class="o">.</span><span class="n">pv_xOPN_SW</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+    <span class="n">stRCC_VRC_02</span><span class="o">.</span><span class="n">pv_xOPN_SW</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+    <span class="n">stRCC_VRC_03</span><span class="o">.</span><span class="n">pv_xOPN_SW</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+    <span class="n">iState</span> <span class="o">:=</span> <span class="n">E_RCC_PUMP_SM_STATES</span><span class="o">.</span><span class="n">IDLE</span><span class="p">;</span>
+<span class="n">END_IF</span>
+
+<span class="n">CASE</span> <span class="n">iState</span> <span class="n">OF</span>
+    <span class="n">E_RCC_PUMP_SM_STATES</span><span class="o">.</span><span class="n">IDLE</span><span class="p">:</span> <span class="o">//</span> <span class="n">IDlE</span>
+
+    <span class="n">IF</span> <span class="n">bStart</span> <span class="n">THEN</span>
+        <span class="n">iState</span> <span class="o">:=</span> <span class="n">E_RCC_PUMP_SM_STATES</span><span class="o">.</span><span class="n">PRESSURE</span><span class="p">;</span>
+        <span class="n">bStart</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+        <span class="n">tTime</span> <span class="o">:=</span> <span class="n">T1</span><span class="p">;</span>
+        <span class="n">tTimer1</span><span class="p">(</span><span class="n">IN</span><span class="o">:=</span><span class="n">FALSE</span><span class="p">);</span> <span class="o">//</span> <span class="n">RESTART</span> <span class="n">TIMER</span>
+    <span class="n">END_IF</span>
+
+    <span class="n">E_RCC_PUMP_SM_STATES</span><span class="o">.</span><span class="n">PRESSURE</span><span class="p">:</span> <span class="o">//</span> <span class="n">PRESSURE</span>
+
+    <span class="n">stRCC_VRC_01</span><span class="o">.</span><span class="n">pv_xOPN_SW</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+    <span class="n">stRCC_VRC_02</span><span class="o">.</span><span class="n">pv_xOPN_SW</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+    <span class="n">stRCC_VRC_03</span><span class="o">.</span><span class="n">pv_xOPN_SW</span> <span class="o">:=</span> <span class="n">TRUE</span><span class="p">;</span>
+
+    <span class="n">IF</span> <span class="n">tTimer1</span><span class="o">.</span><span class="n">Q</span> <span class="n">THEN</span>
+        <span class="n">iState</span> <span class="o">:=</span> <span class="n">E_RCC_PUMP_SM_STATES</span><span class="o">.</span><span class="n">VACUUM</span><span class="p">;</span>
+        <span class="n">tTime</span> <span class="o">:=</span> <span class="n">T2</span><span class="p">;</span>
+        <span class="n">tTimer1</span><span class="p">(</span><span class="n">IN</span><span class="o">:=</span><span class="n">FALSE</span><span class="p">);</span> <span class="o">//</span> <span class="n">RESTART</span> <span class="n">TIMER</span>
+    <span class="n">END_IF</span>
+
+    <span class="n">E_RCC_PUMP_SM_STATES</span><span class="o">.</span><span class="n">VACUUM</span><span class="p">:</span> <span class="o">//</span> <span class="n">VACUUM</span>
+
+    <span class="n">stRCC_VRC_01</span><span class="o">.</span><span class="n">pv_xOPN_SW</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+    <span class="n">stRCC_VRC_02</span><span class="o">.</span><span class="n">pv_xOPN_SW</span> <span class="o">:=</span> <span class="n">TRUE</span><span class="p">;</span>
+    <span class="n">stRCC_VRC_03</span><span class="o">.</span><span class="n">pv_xOPN_SW</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+
+    <span class="n">IF</span> <span class="n">tTimer1</span><span class="o">.</span><span class="n">Q</span> <span class="n">THEN</span>
+        <span class="n">iState</span> <span class="o">:=</span> <span class="n">E_RCC_PUMP_SM_STATES</span><span class="o">.</span><span class="n">VENT</span><span class="p">;</span>
+        <span class="n">tTime</span> <span class="o">:=</span> <span class="n">T3</span><span class="p">;</span>
+        <span class="n">tTimer1</span><span class="p">(</span><span class="n">IN</span><span class="o">:=</span><span class="n">FALSE</span><span class="p">);</span> <span class="o">//</span> <span class="n">RESTART</span> <span class="n">TIMER</span>
+    <span class="n">END_IF</span>
+
+    <span class="n">E_RCC_PUMP_SM_STATES</span><span class="o">.</span><span class="n">VENT</span><span class="p">:</span> <span class="o">//</span> <span class="n">VENT</span><span class="p">;</span>
+
+    <span class="n">stRCC_VRC_01</span><span class="o">.</span><span class="n">pv_xOPN_SW</span> <span class="o">:=</span> <span class="n">TRUE</span><span class="p">;</span>
+    <span class="n">stRCC_VRC_02</span><span class="o">.</span><span class="n">pv_xOPN_SW</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+    <span class="n">stRCC_VRC_03</span><span class="o">.</span><span class="n">pv_xOPN_SW</span> <span class="o">:=</span> <span class="n">FALSE</span><span class="p">;</span>
+
+    <span class="n">IF</span> <span class="n">tTimer1</span><span class="o">.</span><span class="n">Q</span> <span class="n">THEN</span>
+        <span class="n">iState</span> <span class="o">:=</span> <span class="n">E_RCC_PUMP_SM_STATES</span><span class="o">.</span><span class="n">VENT</span><span class="p">;</span>
+    <span class="n">END_IF</span>
+
+<span class="n">END_CASE</span>
+
+<span class="n">END_FUNCTION_BLOCK</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Related:</dt><dd><ul class="simple">
+<li><p><a class="reference internal" href="#e-rcc-pump-sm-states">E_RCC_PUMP_SM_STATES</a></p></li>
 </ul>
 </dd>
 </dl>
@@ -5294,7 +5467,7 @@ END_METHOD
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, SLAC National Accelerator Laboratory.</p>
+    <p>&#169; Copyright 2026, SLAC National Accelerator Laboratory.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
