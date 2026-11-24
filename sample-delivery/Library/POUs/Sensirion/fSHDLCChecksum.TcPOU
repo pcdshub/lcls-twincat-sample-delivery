@@ -21,7 +21,7 @@ Take the LSN ie. nibble of the result and invert it
 fSHDLCChecksum := i_bAdr + i_bCmd + i_bLen;
 
 IF i_bLen > 0 THEN
-FOR iIndex:=0 TO BYTE_TO_INT(i_bLen)DO
+FOR iIndex:=0 TO BYTE_TO_INT(i_bLen)-1 DO
     fSHDLCChecksum := fSHDLCChecksum + i_pbaTxData^;
     i_pbaTxData := i_pbaTxData + 1;
 END_FOR
